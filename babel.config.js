@@ -6,7 +6,6 @@ module.exports = (api) => {
       [
         '@babel/preset-env',
         {
-          debug: true,
           useBuiltIns: 'usage', // Load the same polyfill only once
           corejs: 3,
           bugfixes: true, // Compile the broken syntax to the closest non-broken modern syntax
