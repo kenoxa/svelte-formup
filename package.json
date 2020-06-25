@@ -37,8 +37,7 @@
   "module": "./dist/esm/svelte-formup.js",
   "source": "src/svelte-formup.js",
   "files": [
-    "dist",
-    "src/components"
+    "dist"
   ],
   "scripts": {
     "prebuild": "rimraf dist",
