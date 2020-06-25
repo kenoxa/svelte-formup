@@ -5,6 +5,7 @@
 [![License](https://badgen.net/npm/license/svelte-formup)](https://github.com/kenoxa/svelte-formup/blob/main/LICENSE)
 [![Latest Release](https://badgen.net/npm/v/svelte-formup)](https://www.npmjs.com/package/svelte-formup)
 [![View changelog](https://badgen.net/badge/%E2%80%8B/Explore%20Changelog/green?icon=awesome)](https://changelogs.xyz/svelte-formup)
+[![Bundle Size](https://badgen.net/bundlephobia/minzip/svelte-formup)](https://bundlephobia.com/result?p=svelte-formup)
 
 [![CI](https://github.com/kenoxa/svelte-formup/workflows/CI/badge.svg)](https://github.com/kenoxa/svelte-formup/actions?query=branch%3Amain+workflow%3ACI)
 [![Coverage Status](https://badgen.net/coveralls/c/github/kenoxa/svelte-formup/main)](https://coveralls.io/github/kenoxa/svelte-formup?branch=main)
