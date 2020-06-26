@@ -77,7 +77,7 @@ Using built-in HTML form elements ([Open in REPL](https://svelte.dev/repl/7eeaaf
 <script>
   import * as yup from 'yup'
 
-  import { formup } from '../svelte-formup'
+  import { formup } from 'svelte-formup'
 
   const { values, errors, touched, validate, validity } = formup({
     schema: yup.object().shape({
