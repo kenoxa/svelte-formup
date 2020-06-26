@@ -311,11 +311,11 @@ Determines if the while form is valid.
 
 Determines if any field in the form has been touched.
 
-#### handleSubmit(): Promise\<any>
+##### handleSubmit(): Promise\<any>
 
 Submits the form programmatically. This will abort all active field validation, validate all fields and call `onSubmit`.
 
-#### handleReset(): void
+##### handleReset(): void
 
 Resets the form programmatically. This will abort all active field validation, reset all stores and call `onReset`.
 
@@ -330,10 +330,6 @@ Updates the touched store programmatically by adding the path or (if isTouched i
 ##### setValidatingAt(path: string, isValidating: boolean = true): void
 
 Updates the validating store programmatically by adding the path or (if isValidating is falsey) deleting the path from the store.
-
-##### validateAt(path: string, { debounce = context.debounce } = {}): void
-
-Triggers the validation of path after the given timeout.
 
 ##### validateAt(path: string, { debounce = context.debounce } = {}): void
 
