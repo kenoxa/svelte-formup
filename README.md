@@ -339,7 +339,7 @@ Triggers the validation of path after the given timeout.
 
 Triggers the validation of path after the given timeout.
 
-#### validate(node, options = {})
+#### validate(node, options: string | { at?: string, validateOn?: string[], touchedOn?: string[], debounce: number } = {})
 
 A [svelte action](https://svelte.dev/docs#use_action) to validate the element and all its form children it is applied to.
 
@@ -360,27 +360,47 @@ A [svelte action](https://svelte.dev/docs#use_action) to validate the element an
 The optional options allow to override some context properties for this validation:
 
 - `validateOn`: defaults to form context validateOn
+
+  ```html
+  <input use:validate={{ validateOn: ['input', 'change'] }}>
+  ```
+
 - `touchedOn`: defaults to validateOn and then form context validateOn
+
+  ```html
+  <input use:validate={{ touchedOn: ['blur'] }}>
+  ```
+
 - `debounce`: defaults to form context debounce
 
-Additionally the `at` property allows to define for which attribute the validation should be triggered. If `at` is not provided and the element is not a form it defaults to:
+  ```html
+  <input use:validate={{ debounce: 200 }}>
+  ```
 
-- use data attribute `at`
-- the `name` attribute
-- the `for` attribute
-- the `id` attribute
+- `at`: allows to define for which attribute the validation should be triggered.
+
+  ```html
+  <input use:validate={{ at: 'email' }}>
+  ```
+
+  If `at` is not provided and the element is not a form it defaults to:
+
+  - use data attribute `at`
+  - the `name` attribute
+  - the `for` attribute
+  - the `id` attribute
+
+  If the only option is `path` it can be used direcly:
+
+  ```html
+  <input use:validate={'email'}>
+  ```
 
 If the element is a form it registers `submit` and `reset` listeners.
 
 If no path has been found is listens for the `validateOn` and `touched` events for itself and all its children.
 
-Options may only be the path. In that case the path can be passed as option:
-
-```html
-<input use:validate={'email'}>
-```
-
-##### validity(node, options = {})
+##### validity(node, options: string | { at?: string } = {})
 
 A [svelte action](https://svelte.dev/docs#use_action) to update the validity state of the element and all its form children it is applied to.That means updating `setCustomValidity` and the css classes `valid`, `invalid`, `touched` and `untouched`.
 
@@ -396,24 +416,28 @@ A [svelte action](https://svelte.dev/docs#use_action) to update the validity sta
 </form>
 ```
 
-The optional options allow to override which fields validity is tracked. The only property is `at`. If `at` is not provided and the element is not a form it defaults to:
+- `at`: allows to define for which attribute the validitiy should be tracked.
 
-- use data attribute `at`
-- the `name` attribute
-- the `for` attribute
-- the `id` attribute
+  ```html
+  <input use:validate={{ at: 'email' }}>
+  ```
+
+  If `at` is not provided and the element is not a form it defaults to:
+
+  - use data attribute `at`
+  - the `name` attribute
+  - the `for` attribute
+  - the `id` attribute
+
+  If the only option is `path` it can be used directly:
+
+  ```html
+  <input use:validate={'email'}>
+  ```
 
 If the element is a form it uses `isValid` and `isTouched` stores to determines the validity.
 
 If no path has been found it updates the validity for itself and all its children.
-
-Options may only be the path. In that case the path can be passed as option:
-
-```html
-<p use:validity={'email'}>
-  <input name="email">
-</p>
-```
 
 ##### schema: Schema
 
@@ -459,12 +483,13 @@ Returns the [form context](#form-context-object).
 - [ ] add css class for each test per node: `yup.string().email().required()` => `email required`
 - [ ] what about invalid path (validate and validateAt)
 - [ ] how to handle disabled fields, skip validation?
+- [ ] a guide how to implement a custom component
 - [ ] use eslint with xo config and patch
-- [ ] https://github.com/rollup/plugins/tree/master/packages/html
 - [ ] focus first error field after submit with error
 - [ ] on focus add css class: maybe a focused store?
 - [ ] provides IfError, Input, Select, Choice components using yup schema values to reduce boilerplate via 'svelte-formup-components'
 - [ ] configurable validity class names
+- [ ] svelte-society/recipes-mvp recipy: https://github.com/svelte-society/recipes-mvp/pull/47/files
 
 ## Related Projects
 
