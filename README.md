@@ -117,7 +117,7 @@ Using built-in HTML form elements ([Open in REPL](https://svelte.dev/repl/7eeaaf
     <label for="email">email</label>
     <input id="email" bind:value="{$values.email}" />
     {#if $touched.has('email') && $errors.has('email')}
-    <span>{$errors.get'email').message}</span>
+    <span>{$errors.get('email').message}</span>
     {/if}
   </p>
 
