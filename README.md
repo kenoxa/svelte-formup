@@ -238,7 +238,7 @@ A function called to initialize the form values on creation and reset. The defau
 
 Use this option to run validations each time after `getInitialValues()` has been called.
 
-##### validateOn?: string[] = ['change']
+##### validateOn?: string | string[] = 'change'
 
 A list of DOM events which trigger a validation. Common events are:
 
@@ -247,7 +247,7 @@ A list of DOM events which trigger a validation. Common events are:
 - [focus](https://developer.mozilla.org/en-US/docs/Web/API/Element/focus_event)
 - [blur](https://developer.mozilla.org/en-US/docs/Web/API/Element/blur_event)
 
-##### validateOn?: string[] = validateOn
+##### touchedOn?: string[] = validateOn
 
 A list of DOM events which mark a field as touched. This defaults to the same value as `validateOn`.
 
@@ -335,7 +335,7 @@ Updates the validating store programmatically by adding the path or (if isValida
 
 Triggers the validation of path after the given timeout.
 
-#### validate(node, options: string | { at?: string, validateOn?: string[], touchedOn?: string[], debounce: number } = {})
+#### validate(node, options: string | { at?: string, validateOn?: string | string[], touchedOn?: string | string[], debounce: number } = {})
 
 A [svelte action](https://svelte.dev/docs#use_action) to validate the element and all its form children it is applied to.
 
@@ -355,16 +355,17 @@ A [svelte action](https://svelte.dev/docs#use_action) to validate the element an
 
 The optional options allow to override some context properties for this validation:
 
-- `validateOn`: defaults to form context validateOn
+- `validateOn`: an event name or an array event names; defaults to form context `validateOn`
 
   ```html
   <input use:validate={{ validateOn: ['input', 'change'] }}>
+  <input use:validate={{ validateOn: 'blur' }}>
   ```
 
-- `touchedOn`: defaults to validateOn and then form context validateOn
+- `touchedOn`: an event name or an array event names; defaults to `validateOn` and then form context `validateOn`
 
   ```html
-  <input use:validate={{ touchedOn: ['blur'] }}>
+  <input use:validate={{ touchedOn: 'input']}}>
   ```
 
 - `debounce`: defaults to form context debounce

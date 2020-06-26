@@ -2,6 +2,8 @@ import { getContext, setContext } from 'svelte'
 import { writable, derived, get } from 'svelte/store'
 import { noop, subscribe } from 'svelte/internal'
 
+import { asArray } from './internal/utils'
+
 import validateAction from './internal/validate'
 import validityAction from './internal/validity'
 
@@ -21,7 +23,7 @@ export const formup = ({
   onReset = noop,
   getInitialValues = Object,
   validateInitialValues = false,
-  validateOn = ['change'],
+  validateOn = 'change',
   touchedOn = validateOn,
   debounce = 100,
 }) => {
@@ -90,8 +92,8 @@ export const formup = ({
     validateAt,
 
     // Passed in options
-    validateOn,
-    touchedOn,
+    validateOn: asArray(validateOn),
+    touchedOn: asArray(touchedOn),
     debounce,
   }
 

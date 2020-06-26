@@ -1,11 +1,12 @@
 // eslint-disable-next-line camelcase
 import { listen, prevent_default, run_all } from 'svelte/internal'
 
-import { findSchemaPathForElement, withPathOf } from './utils'
+import { asArray, findSchemaPathForElement, withPathOf } from './utils'
 
 import validityAction from './validity'
 
-const listenOn = (node, events, listener) => events.map((event) => listen(node, event, listener))
+const listenOn = (node, events, listener) =>
+  asArray(events).map((event) => listen(node, event, listener))
 
 // For nested use:validate we want to handle events only once at the closest use:validate
 const VALIDATE_EVENTS = new WeakSet()
