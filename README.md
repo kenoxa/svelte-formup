@@ -101,7 +101,7 @@ Using built-in HTML form elements ([Open in REPL](https://svelte.dev/repl/7eeaaf
       <option>Mx.</option>
     </select>
     {#if $touched.has('title') && $errors.has('title')}
-    <span>{$errors.get'title').message}</span>
+    <span>{$errors.get('title').message}</span>
     {/if}
   </p>
 
@@ -109,7 +109,7 @@ Using built-in HTML form elements ([Open in REPL](https://svelte.dev/repl/7eeaaf
     <label for="name">name</label>
     <input id="name" bind:value="{$values.name}" />
     {#if $touched.has('name') && $errors.has('name')}
-    <span>{$errors.get'name').message}</span>
+    <span>{$errors.get('name').message}</span>
     {/if}
   </p>
 
