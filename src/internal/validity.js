@@ -56,36 +56,42 @@ const withFirstError = (node, results) => updateValidity(node, results.find(iden
 // eslint-disable-next-line unicorn/no-fn-reference-in-iterator
 const withSomeTouched = (node, results) => updateTouched(node, results.some(identity))
 
-export default function validity(node, options = {}) {
-  if (typeof options === 'string') options = { at: options }
-
-  const { at: path = findSchemaPathForElement(node) } = options
-
+export default function validity(node, options) {
   let dispose
-  if (path) {
-    // Update classes on this node based on this node validity
-    dispose = [
-      subscribeTo(this.errors, node, updateStoreValidity),
-      subscribeTo(this.touched, node, updateStoreTouched),
-    ]
-  } else if (node.tagName === 'FORM') {
-    // Update classes on the form based on validity of the whole form
-    dispose = [
-      subscribe(this.isValid, (valid) => updateValidity(node, !valid)),
-      subscribe(this.isTouched, (touched) => updateTouched(node, touched)),
 
-      // To update the custom validitiy we need to error message
-      subscribeToElements(this.errors, node, setStoreCustomValidity, withFirstError),
-    ]
-  } else {
-    // Update classes on this node based on the validity of its contained elements
-    dispose = [
-      subscribeToElements(this.errors, node, updateStoreValidity, withFirstError),
-      subscribeToElements(this.touched, node, updateStoreTouched, withSomeTouched),
-    ]
+  const update = (options = {}) => {
+    if (typeof options === 'string') options = { at: options }
+
+    const { at: path = findSchemaPathForElement(node) } = options
+
+    if (path) {
+      // Update classes on this node based on this node validity
+      dispose = [
+        subscribeTo(this.errors, node, updateStoreValidity),
+        subscribeTo(this.touched, node, updateStoreTouched),
+      ]
+    } else if (node.tagName === 'FORM') {
+      // Update classes on the form based on validity of the whole form
+      dispose = [
+        subscribe(this.isValid, (valid) => updateValidity(node, !valid)),
+        subscribe(this.isTouched, (touched) => updateTouched(node, touched)),
+
+        // To update the custom validitiy we need to error message
+        subscribeToElements(this.errors, node, setStoreCustomValidity, withFirstError),
+      ]
+    } else {
+      // Update classes on this node based on the validity of its contained elements
+      dispose = [
+        subscribeToElements(this.errors, node, updateStoreValidity, withFirstError),
+        subscribeToElements(this.touched, node, updateStoreTouched, withSomeTouched),
+      ]
+    }
   }
 
+  update(options)
+
   return {
+    update,
     destroy() {
       run_all(dispose)
     },
