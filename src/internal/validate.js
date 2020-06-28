@@ -1,7 +1,7 @@
 // eslint-disable-next-line camelcase
-import { listen, prevent_default, run_all } from 'svelte/internal'
+import { listen, prevent_default } from 'svelte/internal'
 
-import { asArray, findSchemaPathForElement, withPathOf } from './utils'
+import { asArray, findSchemaPathForElement, withPathOf, runAll, isString } from './utils'
 
 import validityAction from './validity'
 
@@ -23,8 +23,12 @@ const listenWith = (callback) => (event) => withPathOf(event.target, callback)
 export default function validate(node, options) {
   let dispose
 
+  const destroy = () => runAll(dispose)
+
   const update = (options = {}) => {
-    if (typeof options === 'string') options = { at: options }
+    destroy()
+
+    if (isString(options)) options = { at: options }
 
     const {
       at: path = findSchemaPathForElement(node),
@@ -76,10 +80,5 @@ export default function validate(node, options) {
 
   update(options)
 
-  return {
-    update,
-    destroy() {
-      run_all(dispose.filter(Boolean))
-    },
-  }
+  return { update, destroy }
 }

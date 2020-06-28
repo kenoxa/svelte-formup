@@ -1,7 +1,6 @@
-// eslint-disable-next-line camelcase
-import { run_all, subscribe, identity } from 'svelte/internal'
+import { subscribe, identity } from 'svelte/internal'
 
-import { findSchemaPathForElement, withPathOf } from './utils'
+import { findSchemaPathForElement, withPathOf, runAll, isString } from './utils'
 
 const updateToggle = (node, store, toggle) => withPathOf(node, (path) => toggle(node, store, path))
 
@@ -59,8 +58,12 @@ const withSomeTouched = (node, results) => updateTouched(node, results.some(iden
 export default function validity(node, options) {
   let dispose
 
+  const destroy = () => runAll(dispose)
+
   const update = (options = {}) => {
-    if (typeof options === 'string') options = { at: options }
+    destroy()
+
+    if (isString(options)) options = { at: options }
 
     const { at: path = findSchemaPathForElement(node) } = options
 
@@ -90,10 +93,5 @@ export default function validity(node, options) {
 
   update(options)
 
-  return {
-    update,
-    destroy() {
-      run_all(dispose)
-    },
-  }
+  return { update, destroy }
 }

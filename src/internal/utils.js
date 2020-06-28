@@ -1,3 +1,6 @@
+// eslint-disable-next-line camelcase
+import { run_all } from 'svelte/internal'
+
 export const asArray = (value) => {
   if (Array.isArray(value)) return value
   if (value) return [value]
@@ -19,3 +22,7 @@ export const findSchemaPathForElement = (node) =>
     validatePath(node.name) ||
     validatePath(node.for) ||
     validatePath(node.id))
+
+export const runAll = (callbacks) => callbacks && run_all(callbacks.filter(Boolean))
+
+export const isString = (value) => typeof value === 'string'
