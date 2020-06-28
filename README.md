@@ -335,7 +335,7 @@ Updates the validating store programmatically by adding the path or (if isValida
 
 Triggers the validation of path after the given timeout.
 
-#### validate(node, options: string | { at?: string, validateOn?: string | string[], touchedOn?: string | string[], debounce: number } = {})
+#### validate(node, options: string | { at?: string, on?: string | string[], validateOn?: string | string[], touchedOn?: string | string[], debounce: number } = {})
 
 A [svelte action](https://svelte.dev/docs#use_action) to validate the element and all its form children it is applied to.
 
@@ -350,11 +350,16 @@ A [svelte action](https://svelte.dev/docs#use_action) to validate the element an
 
 <form use:validate>
   <!-- .... --->
+
+  <input use:validate={{ on: 'input' }}>
+
+  <!-- .... --->
 </form>
 ```
 
 The optional options allow to override some context properties for this validation:
 
+- `on`: an event name or an array event names; alias for `validateOn`
 - `validateOn`: an event name or an array event names; defaults to form context `validateOn`
 
   ```html

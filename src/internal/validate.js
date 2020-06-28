@@ -29,7 +29,7 @@ export default function validate(node, options) {
     const {
       at: path = findSchemaPathForElement(node),
       debounce = this.debounce,
-      validateOn = this.validateOn,
+      validateOn = options.on || this.validateOn,
       touchedOn = options.validateOn || this.touchedOn,
     } = options
 
