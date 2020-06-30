@@ -13,26 +13,32 @@ export type Updater<T> = (value: T) => T
 /** Cleanup logic callback. */
 export type Invalidator<T> = (value?: T) => void
 
+/**
+ * Svelte readable store contract.
+ */
 export interface Readable<T> {
   /**
    * Subscribe on value changes.
-   * @param run subscription callback
-   * @param invalidate cleanup callback
+   * @param run - subscription callback
+   * @param invalidate - cleanup callback
+   * @returns function to unsubscribe
    */
   subscribe(run: Subscriber<T>, invalidate?: Invalidator<T>): Unsubscriber
 }
 
-/** Writable interface for both updating and subscribing. */
+/**
+ * Svelte writable store contract.
+ */
 export interface Writable<T> extends Readable<T> {
   /**
    * Set value and inform subscribers.
-   * @param value to set
+   * @param value - to set
    */
   set(value: T): void
 
   /**
    * Update value using callback and inform subscribers.
-   * @param updater callback
+   * @param updater - callback
    */
   update(updater: Updater<T>): void
 }
@@ -57,6 +63,9 @@ export type SvelteAction<P> = (node: Element, parameters?: P) => SvelteActionRes
  */
 export type EventName = keyof GlobalEventHandlersEventMap | string
 
+/**
+ * Options for {@link FormupSchema.validate} and {@link FormupSchema.validateAt}.
+ */
 export interface ValidateOptions<
   Values = Record<string, unknown>,
   State = Record<string, unknown>
@@ -64,28 +73,28 @@ export interface ValidateOptions<
   /**
    * Only validate the input, and skip and coercion or transformation.
    *
-   * @default true
+   * @defaultvalue true
    */
   strict?: boolean
 
   /**
    * Return from validation methods on the first error rather than after all validations run.
    *
-   * @default true
+   * @defaultvalue true
    */
   abortEarly?: boolean
 
   /**
    * Remove unspecified keys from objects.
    *
-   * @default true
+   * @defaultvalue true
    */
   stripUnknown?: boolean
 
   /**
    * When false validations will not descend into nested schema (relevant for objects or arrays).
    *
-   * @default true
+   * @defaultvalue true
    */
   recursive?: boolean
 
@@ -95,6 +104,9 @@ export interface ValidateOptions<
   context: ValidateContext<Values, State>
 }
 
+/**
+ * Type of {@link ValidateOptions.context}.
+ */
 export interface ValidateContext<
   Values = Record<string, unknown>,
   State = Record<string, unknown>
@@ -120,8 +132,8 @@ export interface FormupSchema<Values = Record<string, unknown>, State = Record<s
    *
    * This method is asynchronous and returns a Promise object, that is fulfilled with the value, or rejected with a ValidationError.
    *
-   * @param value the data to validate
-   * @param options an object hash containing any schema options you may want to override (or specify for the first time).
+   * @param value - the data to validate
+   * @param options - an object hash containing any schema options you may want to override (or specify for the first time).
    * @throws ValidationError
    */
   validate(value: unknown, options?: ValidateOptions<Values, State>): Promise<Values>
@@ -129,58 +141,66 @@ export interface FormupSchema<Values = Record<string, unknown>, State = Record<s
   /**
    * Validate a deeply nested path within the schema. Similar to how reach works, but uses the resulting schema as the subject for validation.
    *
-   * @param path to validate
-   * @param value the root value relative to the starting schema, not the value at the nested path.
-   * @param options an object hash containing any schema options you may want to override (or specify for the first time).
+   * @param path - to validate
+   * @param value - the root value relative to the starting schema, not the value at the nested path.
+   * @param options - an object hash containing any schema options you may want to override (or specify for the first time).
    * @throws ValidationError
    */
   validateAt(path: string, value: Values, options?: ValidateOptions<Values, State>): Promise<Values>
 }
 
+/**
+ * CSS class name mapping used {@link FormContext.validity}.
+ *
+ * These can be overriden using {@link FormOptions.classes} when invoking {@link formup}.
+ */
 export interface ValidityCSSClasses {
   /**
    * Set on the element if it or all its children is valid.
-   * @default "valid"
+   * @defaultvalue `"valid"`
    */
   readonly valid?: string
 
   /**
    * Set on the element if it or any of its children is invalid.
-   * @default "invalid"
+   * @defaultvalue `"invalid"`
    */
   readonly invalid?: string
 
   /**
    * Set on the element if it or all its children is pristine.
-   * @default "pristine"
+   * @defaultvalue `"pristine"`
    */
   readonly pristine?: string
 
   /**
    * Set on the element if it or any of its children is dirty.
-   * @default "dirty"
+   * @defaultvalue `"dirty"`
    */
   readonly dirty?: string
 
   /**
    * Set on the element if it or any of its children is validating.
-   * @default "validating"
+   * @defaultvalue `"validating"`
    */
   readonly validating?: string
 
   /**
    * Set on the form if it is submitting.
-   * @default "submitting"
+   * @defaultvalue `"submitting"`
    */
   readonly submitting?: string
 
   /**
    * Set on the form if it is has been submitted.
-   * @default "submitted"
+   * @defaultvalue `"submitted"`
    */
   readonly submitted?: string
 }
 
+/**
+ * Provides to all form properties.
+ */
 export interface FormupContext<Values = Record<string, unknown>, State = Record<string, unknown>> {
   /**
    * A [yup](https://www.npmjs.com/package/yup) like schema to perform validation.
@@ -248,35 +268,35 @@ export interface FormupContext<Values = Record<string, unknown>, State = Record<
    *
    * This does not reflect individual field validation triggered by validateAt.
    *
-   * When this becames `true` the `validating` CSS class is added to the form.
+   * When this becames `true` the {@link ValidityCSSClasses.validating} CSS class is added to the form.
    */
   readonly isValidating: Readable<boolean>
 
   /**
    * Determines if the form is submitting (most likely because of a submit).
    *
-   * When this becames `true` the `submitting` CSS class is added to the form.
+   * When this becames `true` the {@link ValidityCSSClasses.submitting} CSS class is added to the form.
    */
   readonly isSubmitting: Readable<boolean>
 
   /**
    * Determins if the form has been succesfully submitted.
    *
-   * When this becames `true` the `submitted` CSS class is added to the form.
+   * When this becames `true` the {@link ValidityCSSClasses.submitted} CSS class is added to the form.
    */
   readonly isSubmitted: Readable<boolean>
 
   /**
    * Number of times the form was submitted.
    *
-   * Reseted to zero after a succesful submit or a reset.
+   * Resetted to zero after a succesful {@link FormContext.submit} or a {@link FormContext.reset}.
    */
   readonly submitCount: Readable<number>
 
   /**
    * Determines if the whole form is valid.
    *
-   * When this becames `true` the `valid` CSS class is added to the form.
+   * When this becames `true` the {@link ValidityCSSClasses.valid} CSS class is added to the form.
    */
   readonly isValid: Readable<boolean>
 
@@ -285,7 +305,7 @@ export interface FormupContext<Values = Record<string, unknown>, State = Record<
    *
    * A form is invalid when any of its inputs fails its validation function ( if there are errors ).
    *
-   * When this becames `true` the `invalid` CSS class is added to the form.
+   * When this becames `true` the {@link ValidityCSSClasses.invalid} CSS class is added to the form.
    */
   readonly isInvalid: Readable<boolean>
 
@@ -294,14 +314,14 @@ export interface FormupContext<Values = Record<string, unknown>, State = Record<
    *
    * A form is pristine when it has not been touched && no values have been entered in any field.
    *
-   * When this becames `true` the `pristine` CSS class is added to the form.
+   * When this becames `true` the {@link ValidityCSSClasses.pristine} CSS class is added to the form.
    */
   readonly isPristine: Readable<boolean>
 
   /**
    * Boolean that is true when pristine is false
    *
-   * When this becames `true` the `dirty` CSS class is added to the form.
+   * When this becames `true` the {@link ValidityCSSClasses.dirty} CSS class is added to the form.
    */
   readonly isDirty: Readable<boolean>
 
@@ -309,12 +329,14 @@ export interface FormupContext<Values = Record<string, unknown>, State = Record<
    * This function will submit the form and trigger some lifecycle events.
    *
    * 1. abort all active field validation
-   * 1. call all schema.validate.
-   * 2. call onSubmit if the form is valid.
+   * 1. call {@link FormSchema.validate}.
+   * 2. call {@link FormOptions.onSubmit} if the form is valid.
    *
+   * @remarks
    * This function can be called manually however it is also called if you
    * have a `<button type='submit'>` within the `<form>`.
    *
+   * @remarks
    * Repeated invocation while there is an active submit have no effect (eg are ignored).
    */
   readonly submit: () => Promise<void>
@@ -322,7 +344,7 @@ export interface FormupContext<Values = Record<string, unknown>, State = Record<
   /**
    * Function that will reset the form to its initial state.
    *
-   * This will abort all active field validation, reset all stores and call `onReset`.
+   * This will abort all active field validation, reset all stores and call {@link FormOptions.onReset}.
    *
    * This may have no effect (eg is ignored) if there is an active submit.
    */
@@ -332,31 +354,31 @@ export interface FormupContext<Values = Record<string, unknown>, State = Record<
    * Set the form error manually.
    *
    * If `error` is falsey means deleting the path from the store.
-   * @param error to set
+   * @param error - to set
    */
   readonly setError: (error?: ValidationError | undefined | null | false) => void
 
   /**
    * Set the error message of a field imperatively.
    *
-   * @param path should match the key of errors you wish to update. Useful for creating custom input error handlers.
-   * @param error to set; falsey means deleting the path from the store.
+   * @param path - should match the key of errors you wish to update. Useful for creating custom input error handlers.
+   * @param error - to set; falsey means deleting the path from the store.
    */
   readonly setErrorAt: (path: string, error?: ValidationError | undefined | null | false) => void
 
   /**
    * Set the dirty state of a field imperatively.
    *
-   * @param path should match the key of dirty you wish to update. Useful for creating custom input handlers.
-   * @param dirty to set; falsey means deleting the path from the store.
+   * @param path - should match the key of dirty you wish to update. Useful for creating custom input handlers.
+   * @param dirty - to set; falsey means deleting the path from the store.
    */
   readonly setDirtyAt: (path: string, dirty?: boolean) => void
 
   /**
    * Set the validating state of a field imperatively.
    *
-   * @param path should match the key of validating you wish to update. Useful for creating custom input handlers.
-   * @param validating to set; falsey means deleting the path from the store.
+   * @param path - should match the key of validating you wish to update. Useful for creating custom input handlers.
+   * @param validating - to set; falsey means deleting the path from the store.
    */
   readonly setValidatingAt: (path: string, validating?: boolean) => void
 
@@ -367,8 +389,6 @@ export interface FormupContext<Values = Record<string, unknown>, State = Record<
 
   /**
    * A [svelte action](https://svelte.dev/docs#use_action) to validate the element and all its form children it is applied to.
-   *
-   * > The `validity` action is applied automatically on that node.
    *
    * ```html
    * <script>
@@ -385,6 +405,9 @@ export interface FormupContext<Values = Record<string, unknown>, State = Record<
    *   <!-- .... --->
    * </form>
    * ```
+   *
+   * @remarks
+   * The {@link FormContext.validity} action is applied automatically on that node.
    */
   readonly validate: SvelteAction<string | ValidateActionOptions>
 
@@ -392,18 +415,19 @@ export interface FormupContext<Values = Record<string, unknown>, State = Record<
    * A [svelte action](https://svelte.dev/docs#use_action) to update the validity state of
    * the element and all its form children it is applied to.
    *
-   * That means updating `setCustomValidity`, `aria-invalid` and the css classes `valid`,
-   * `invalid`, `dirty`, `pristine`, `validating`, `submitting` and `submitted`.
+   * That means updating `setCustomValidity`, `aria-invalid` and the {@link ValidityCSSClasses}.
    *
    * ```html
    * <script>
    *   import { formup } from 'svelte-formup'
    *
-   *   const { validity } = formup(options)
+   *   const { validate, validity } = formup(options)
    * </script>
    *
-   * <form use:validity>
-   *   <!-- .... --->
+   * <form use:validate>
+   *   <fieldset use:validity>
+   *     <!-- .... --->
+   *   </fieldset>
    * </form>
    * ```
    */
@@ -431,14 +455,21 @@ export interface FormupContext<Values = Record<string, unknown>, State = Record<
   readonly classes: ValidityCSSClasses
 }
 
+/**
+ * Options for {@link FormContext.validateAt}.
+ */
 export interface ValidateAtOptions {
   /**
    * Timeout in milliseconds after which a validation should start.
-   * @default context.debounce
+   *
+   * @defaultvalue {@link FormContext.debounce}
    */
   debounce?: number
 }
 
+/**
+ * Options for {@link FormContext.validate}.
+ */
 export interface ValidateActionOptions {
   /**
    * What field to validate.
@@ -478,23 +509,26 @@ export interface ValidateActionOptions {
    * <input use:validate={{ validateOn: 'blur' }}>
    * ```
    *
-   * @default on || context.validateOn
+   * @defaultvalue {@link ValidateActionOptions.on}, {@link FormContext.validateOn}
    */
   validateOn?: EventName | EventName[]
 
   /**
    * Override which events should mark a field as dirty.
-   * @default on || context.dirtyOn
+   * @defaultvalue {@link ValidateActionOptions.on}, {@link FormContext.dirtyOn}
    */
   dirtyOn?: EventName | EventName[]
 
   /**
    * Timeout in milliseconds after which a validation should start.
-   * @default context.debounce
+   * @defaultvalue {@link FormContext.debounce}
    */
   debounce?: number
 }
 
+/**
+ * Options for {@link FormContext.validity}.
+ */
 export interface ValiditiyActionOptions {
   /**
    * For which field to track the validity status.
@@ -523,6 +557,9 @@ export interface ValiditiyActionOptions {
   at?: string
 }
 
+/**
+ * Represents a validation error.
+ */
 export interface ValidationError extends Error {
   name: string
   message: string

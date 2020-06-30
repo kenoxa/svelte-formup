@@ -73,7 +73,7 @@ export interface FormupOptions<Values = Record<string, unknown>, State = Record<
   /**
    * A function that gets called when form is submitted successfully. The function receives the values as a parameter.
    *
-   * This function should never throw!
+   * @throws An thrown error is passed to {@link FormContext.setError}.
    */
   onSubmit?: (values: Values, context: FormupContext<Values, State>) => void | Promise<void>
 
@@ -85,14 +85,14 @@ export interface FormupOptions<Values = Record<string, unknown>, State = Record<
   /**
    * A function called to initialize the form values on creation and reset. The default returns an empty object.
    *
-   * @default () => Object.create(null)
+   * @defaultvalue `() => Object.create(null)`
    */
   getInitialValues?: () => NonNullable<Values>
 
   /**
-   * Use this option to run validations each time after `getInitialValues()` has been called.
+   * Use this option to run validations each time after {@link FormupOptions.getInitialValues} has been called.
    *
-   * @default false
+   * @defaultvalue `false`
    */
   validateInitialValues?: boolean
 
@@ -101,19 +101,19 @@ export interface FormupOptions<Values = Record<string, unknown>, State = Record<
    *
    * This is useful for capturing and passing through API responses to your inner component.
    *
-   * @default Object.create(null)
+   * @defaultvalue `Object.create(null)`
    */
   state?: State
 
   /**
    * Which events should trigger a validation.
-   * @default "change"
+   * @defaultvalue `"change"`
    */
   validateOn?: EventName | EventName[]
 
   /**
-   * Which events should mark a field as dirty.
-   * @default validateOn
+   * Which events should mark a field as {@link FormContext.dirty}.
+   * @defaultvalue {@link FormupOptions.validateOn}
    */
   dirtyOn?: EventName | EventName[]
 
@@ -121,7 +121,7 @@ export interface FormupOptions<Values = Record<string, unknown>, State = Record<
    * Timeout in milliseconds after which field level validation should start.
    *
    * If platform is Node.JS this defaults to `0`.
-   * @default 100
+   * @defaultvalue `100`
    */
   debounce?: number
 
@@ -135,7 +135,7 @@ const isEmpty = ({ size }: { size: number }): boolean => size === 0
 const negate = (value: boolean): boolean => !value
 
 /**
- * Creates and registers a new [form context](#form-context-object) using [options](#options) and returns it.
+ * Creates and registers a new {@link FormContext} using the options and returns it.
  *
  * ```html
  * <script>
@@ -145,7 +145,7 @@ const negate = (value: boolean): boolean => !value
  * </script>
  * ```
  *
- * @param options to use
+ * @param options - to use
  */
 export const formup = <Values = Record<string, unknown>, State = Record<string, unknown>>({
   schema,
@@ -236,7 +236,7 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
       abortActiveValidateAt()
 
       try {
-        const data = await validate(/* strict */ true)
+        const data = await validate()
 
         if (data) {
           const result = await onSubmit(data, context)
@@ -316,7 +316,7 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
 
   return context
 
-  async function validate(strict?: boolean): Promise<Values | void> {
+  async function validate(): Promise<Values | void> {
     validateAbortController?.abort()
     validateAbortController = new AbortController()
     const currentController = validateAbortController
@@ -326,7 +326,7 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
     try {
       const data = await schema.validate(currentValues, {
         abortEarly: false,
-        strict,
+        strict: false,
         context: createValidateContext(validateAbortController),
       })
 
@@ -395,15 +395,12 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
     state.c?.abort()
 
     clearTimeout(state.t)
-    state.t =
-      debounce > 0
-        ? (setTimeout as Window['setTimeout'])(doValidateAt, debounce, path, state, debounce)
-        : void doValidateAt(path, state, debounce) // eslint-disable-line no-void
+    state.t = (setTimeout as Window['setTimeout'])(doValidateAt, debounce, path, state, debounce)
   }
 
   async function doValidateAt(path: string, state: ValidateState, debounce: number): Promise<void> {
     // Have at least debounce milliseconds passed between validation calls for this field
-    if (debounce > 0 && Date.now() - state.l < debounce) {
+    if (Date.now() - state.l < debounce) {
       return validateAt(path, { debounce })
     }
 
