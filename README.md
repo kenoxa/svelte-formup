@@ -72,7 +72,9 @@ import { formup } from 'https://unpkg.com/svelte-formup?module'
 
 ## Usage
 
-Using built-in HTML form elements ([Open in REPL](https://svelte.dev/repl/7eeaaf18965a4ec7a84b62d3a3387587?version=3.23.2)):
+### Native HTML form elements
+
+[![Edit laughing-hopper-7il5k](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/laughing-hopper-7il5k?fontsize=14&hidenavigation=1&module=%2FApp.svelte&theme=dark)
 
 ```html
 <script>
@@ -101,25 +103,16 @@ Using built-in HTML form elements ([Open in REPL](https://svelte.dev/repl/7eeaaf
       <option>Mrs.</option>
       <option>Mx.</option>
     </select>
-    {#if $dirty.has('title') && $errors.has('title')}
-    <span>{$errors.get('title').message}</span>
-    {/if}
   </p>
 
   <p use:validity>
     <label for="name">name</label>
-    <input id="name" bind:value="{$values.name}" />
-    {#if $dirty.has('name') && $errors.has('name')}
-    <span>{$errors.get('name').message}</span>
-    {/if}
+    <input id="name" bind:value="{$values.name}" type="text" />
   </p>
 
   <p use:validity>
     <label for="email">email</label>
-    <input id="email" bind:value="{$values.email}" />
-    {#if $dirty.has('email') && $errors.has('email')}
-    <span>{$errors.get('email').message}</span>
-    {/if}
+    <input id="email" bind:value="{$values.email}" type="email" />
   </p>
 
   <p>
@@ -129,9 +122,11 @@ Using built-in HTML form elements ([Open in REPL](https://svelte.dev/repl/7eeaaf
 </form>
 ```
 
-### Displaying Error Message
+### Error Messages
 
-`svelte-formup` does not provide any svelte components. Most projects have their own way of reporting errors. Below is an example component to simplify error handling:
+[![Edit naughty-buck-t5yx4](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/naughty-buck-t5yx4?fontsize=14&hidenavigation=1&module=%2FApp.svelte&theme=dark)
+
+`svelte-formup` does not provide any svelte components. Most projects have their own way of reporting errors. Below is an example component to simplify error handling.
 
 ```html
 <script>
@@ -153,7 +148,7 @@ Using built-in HTML form elements ([Open in REPL](https://svelte.dev/repl/7eeaaf
 {/if}
 ```
 
-This could be used like (omitting identical code for brevity) ([Open in REPL](https://svelte.dev/repl/333dbbf625ba4694b1d07a1bfa7c0b21?version=3.23.2)):
+This could be used like (omitting identical code for brevity)
 
 ```html
 <script>
@@ -161,33 +156,9 @@ This could be used like (omitting identical code for brevity) ([Open in REPL](ht
 </script>
 
 <form use:validate>
-  <p use:validity>
-    <label for="title">title</label>
-    <select id="title" bind:value="{$values.title}">
-      <option></option>
-      <option>Mr.</option>
-      <option>Mrs.</option>
-      <option>Mx.</option>
-    </select>
-    <IfError at="title" />
-  </p>
-
-  <p use:validity>
-    <label for="name">name</label>
-    <input id="name" bind:value="{$values.name}" />
-    <IfError at="name" />
-  </p>
-
-  <p use:validity>
-    <label for="email">email</label>
-    <input id="email" bind:value="{$values.email}" />
-    <IfError at="email" />
-  </p>
-
-  <p>
-    <button type="submit">Submit</button>
-    <button type="reset">reset</button>
-  </p>
+  <label for="name">name</label>
+  <input id="name" bind:value="{$values.name}" type="email" />
+  <IfError at="name" />
 </form>
 ```
 
@@ -223,6 +194,7 @@ This could be used like (omitting identical code for brevity) ([Open in REPL](ht
 - [ ] provides IfError, Input, Select, Choice components using yup schema values to reduce boilerplate via 'svelte-formup-components'
 - [ ] svelte-society/recipes-mvp recipy: [form validation with yup](https://github.com/svelte-society/recipes-mvp/pull/47/files)
 - [ ] examples like [informed](https://joepuzzo.github.io/informed)
+- [ ] style guide: `form > :global(.valid.dirty)`
 
 ## Related Projects
 
