@@ -2,20 +2,14 @@ name: docs
 
 on:
   push:
-    branches: [main]
+    tags: ['v*.*.*']
+  release:
+    types: [published]
 
 jobs:
   gh-pages:
     runs-on: ubuntu-latest
     steps:
-      - name: Release Please
-        uses: GoogleCloudPlatform/release-please-action@v1.3.2
-        id: release
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          release-type: node
-
-      # The logic below handles the npm publication:
       - name: Checkout repository
         uses: actions/checkout@v2
 
