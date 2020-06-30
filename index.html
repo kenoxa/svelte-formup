@@ -1,0 +1,388 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>svelte-formup - v0.2.1</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">svelte-formup - v0.2.1</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+			</ul>
+			<h1>svelte-formup - v0.2.1</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#svelte-formup" id="svelte-formup" style="color: inherit; text-decoration: none;">
+					<h1>svelte-formup</h1>
+				</a>
+				<blockquote>
+					<p>form helpers for <a href="https://svelte.dev/">svelte</a></p>
+				</blockquote>
+				<p><a href="https://github.com/kenoxa/svelte-formup/blob/main/LICENSE"><img src="https://badgen.net/npm/license/svelte-formup" alt="License"></a>
+					<a href="https://www.npmjs.com/package/svelte-formup"><img src="https://badgen.net/npm/v/svelte-formup" alt="Latest Release"></a>
+					<a href="https://changelogs.xyz/svelte-formup"><img src="https://badgen.net/badge/%E2%80%8B/Explore%20Changelog/green?icon=awesome" alt="View changelog"></a>
+				<a href="https://bundlephobia.com/result?p=svelte-formup"><img src="https://badgen.net/bundlephobia/minzip/svelte-formup" alt="Bundle Size"></a></p>
+				<p><a href="https://github.com/kenoxa/svelte-formup/actions?query=branch%3Amain+workflow%3ACI"><img src="https://github.com/kenoxa/svelte-formup/workflows/CI/badge.svg" alt="CI"></a>
+					<a href="https://coveralls.io/github/kenoxa/svelte-formup?branch=main"><img src="https://badgen.net/coveralls/c/github/kenoxa/svelte-formup/main" alt="Coverage Status"></a>
+					<a href="http://makeapullrequest.com"><img src="https://badgen.net/badge/PRs/welcome/purple" alt="PRs Welcome"></a>
+				<a href="https://conventionalcommits.org"><img src="https://badgen.net/badge/Conventional%20Commits/1.0.0/cyan" alt="Conventional Commits"></a></p>
+				<a href="#what" id="what" style="color: inherit; text-decoration: none;">
+					<h2>What?</h2>
+				</a>
+				<blockquote>
+					<p>Not standing in the way and keeping everything smooth.</p>
+				</blockquote>
+				<ul>
+					<li>Plug&#39;n&#39;Play. Input elements in, values out.</li>
+					<li>Works just like a normal form. Except it does all the tedious work for you.</li>
+					<li>Extendable. Work with native form elements and custom input components out of the box.</li>
+					<li>Two-Way Binding. <code>svelte-formup</code> is two-way bound by default. Change a value in your object, and it changes in your inputs.</li>
+					<li>Async Validation. Everything is validated asynchronously for uninterrupted user experience.</li>
+				</ul>
+				<a href="#why" id="why" style="color: inherit; text-decoration: none;">
+					<h2>Why?</h2>
+				</a>
+				<p><a href="https://svelte.dev/">svelte</a>s <a href="https://svelte.dev/docs#use_action">action feature</a> is a unique way to attach custom logic to DOM elements. Combined with its great way of <a href="https://svelte.dev/docs#bind_element_property">two-way binding</a> and its <a href="https://svelte.dev/docs#svelte_store">reactive stores</a> this allows to write very native looking forms with no boilerplate.</p>
+				<p>Adding <a href="https://www.npmjs.com/package/yup">yup</a> allows to define a schema for value parsing and validation. Yup schema are extremely expressive and allow modeling complex, interdependent validations, or value transformations.</p>
+				<p>Styling forms in a consistent way has always been a problem. Everyone has her own opinion about it. <code>svelte-formup</code> allows flexibel error reporting supporting both <a href="https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation">native</a> and programmatic usage. Invalid form elements <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement/setCustomValidity">are marked</a> supporting several validity state specific css selectors like <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:invalid">:invalid</a>. Additionally <code>svelte-formup</code> adds CSS classes (<code>invalid</code>, <code>valid</code>, <code>dirty</code>, <code>pristine</code>, <code>validating</code>, <code>submitting</code> and <code>submitted</code>) for further custom styling. These classes maybe added to surrounding fieldsets or form group element depending on the validity state of the contained form elements.</p>
+				<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+				<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+				<ul>
+					<li><a href="#installation">Installation</a></li>
+					<li><a href="#usage">Usage</a></li>
+					<li><a href="#api">API</a></li>
+					<li><a href="#polyfills">Polyfills</a></li>
+					<li><a href="#todo">TODO</a></li>
+					<li><a href="#related-projects">Related Projects</a></li>
+					<li><a href="#support">Support</a></li>
+					<li><a href="#contribute">Contribute</a></li>
+					<li><a href="#npm-statistics">NPM Statistics</a></li>
+					<li><a href="#license">License</a></li>
+				</ul>
+				<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+					<h2>Installation</h2>
+				</a>
+				<pre><code class="language-sh">npm install svelte-formup</code></pre>
+				<p>And then import it:</p>
+				<pre><code class="language-js"><span class="hljs-comment">// using es modules</span>
+<span class="hljs-keyword">import</span> { formup } <span class="hljs-keyword">from</span> <span class="hljs-string">'svelte-formup'</span>
+
+<span class="hljs-comment">// common.js</span>
+<span class="hljs-keyword">const</span> { formup } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'svelte-formup'</span>)</code></pre>
+				<p>Alternatively use <a href="https://unpkg.com/svelte-formup/">UNPKG</a> or <a href="https://cdn.jsdelivr.net/npm/svelte-formup/">jsDelivr</a> packages.</p>
+				<p>Hotlinking from unpkg: <em>(no build tool needed!)</em></p>
+				<pre><code class="language-js"><span class="hljs-keyword">import</span> { formup } <span class="hljs-keyword">from</span> <span class="hljs-string">'https://unpkg.com/svelte-formup?module'</span></code></pre>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<p>Using built-in HTML form elements (<a href="https://svelte.dev/repl/7eeaaf18965a4ec7a84b62d3a3387587?version=3.23.2">Open in REPL</a>):</p>
+				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+  <span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> yup <span class="hljs-keyword">from</span> <span class="hljs-string">'yup'</span>
+
+  <span class="hljs-keyword">import</span> { formup } <span class="hljs-keyword">from</span> <span class="hljs-string">'svelte-formup'</span>
+
+  <span class="hljs-keyword">const</span> { values, errors, dirty, validate, validity } = formup({
+    <span class="hljs-attr">schema</span>: yup.object().shape({
+      <span class="hljs-attr">title</span>: yup.string().oneOf([<span class="hljs-string">'Mr.'</span>, <span class="hljs-string">'Mrs.'</span>, <span class="hljs-string">'Mx.'</span>]).required(),
+      <span class="hljs-attr">name</span>: yup.string().required(),
+      <span class="hljs-attr">email</span>: yup.string().email().required(),
+    }),
+    onSubmit(data, context) {
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'onSubmit'</span>, { data, context })
+    },
+  })
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">use:validate</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">use:validity</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"title"</span>&gt;</span>title<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"title"</span> <span class="hljs-attr">bind:value</span>=<span class="hljs-string">"{$values.title}"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span>Mr.<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span>Mrs.<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span>Mx.<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span>
+    {#if $dirty.has('title') &amp;&amp; $errors.has('title')}
+    <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>{$errors.get('title').message}<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+    {/if}
+  <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">use:validity</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"name"</span>&gt;</span>name<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"name"</span> <span class="hljs-attr">bind:value</span>=<span class="hljs-string">"{$values.name}"</span> /&gt;</span>
+    {#if $dirty.has('name') &amp;&amp; $errors.has('name')}
+    <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>{$errors.get('name').message}<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+    {/if}
+  <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">use:validity</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"email"</span>&gt;</span>email<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"email"</span> <span class="hljs-attr">bind:value</span>=<span class="hljs-string">"{$values.email}"</span> /&gt;</span>
+    {#if $dirty.has('email') &amp;&amp; $errors.has('email')}
+    <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>{$errors.get('email').message}<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+    {/if}
+  <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"submit"</span>&gt;</span>Submit<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"reset"</span>&gt;</span>reset<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></code></pre>
+				<a href="#displaying-error-message" id="displaying-error-message" style="color: inherit; text-decoration: none;">
+					<h3>Displaying Error Message</h3>
+				</a>
+				<p><code>svelte-formup</code> does not provide any svelte components. Most projects have their own way of reporting errors. Below is an example component to simplify error handling:</p>
+				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+  <span class="hljs-keyword">import</span> { getFormupContext } <span class="hljs-keyword">from</span> <span class="hljs-string">'svelte-formup'</span>
+
+  <span class="hljs-keyword">export</span> <span class="hljs-keyword">let</span> at
+
+  <span class="hljs-keyword">const</span> { dirty, errors } = getFormupContext()
+
+  <span class="hljs-keyword">let</span> error
+
+  <span class="hljs-attr">$</span>: error = $errors.get(at)
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+
+{#if $dirty.has(at) &amp;&amp; error}
+<span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"error"</span> <span class="hljs-attr">aria-live</span>=<span class="hljs-string">"polite"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">slot</span> {<span class="hljs-attr">error</span>}&gt;</span>{error.message}<span class="hljs-tag">&lt;/<span class="hljs-name">slot</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+{/if}</code></pre>
+				<p>This could be used like (omitting identical code for brevity) (<a href="https://svelte.dev/repl/333dbbf625ba4694b1d07a1bfa7c0b21?version=3.23.2">Open in REPL</a>):</p>
+				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+  <span class="hljs-keyword">import</span> IfError <span class="hljs-keyword">from</span> <span class="hljs-string">'./if-error.svelte'</span>
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">use:validate</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">use:validity</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"title"</span>&gt;</span>title<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"title"</span> <span class="hljs-attr">bind:value</span>=<span class="hljs-string">"{$values.title}"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span>Mr.<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span>Mrs.<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span>Mx.<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">IfError</span> <span class="hljs-attr">at</span>=<span class="hljs-string">"title"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">use:validity</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"name"</span>&gt;</span>name<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"name"</span> <span class="hljs-attr">bind:value</span>=<span class="hljs-string">"{$values.name}"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">IfError</span> <span class="hljs-attr">at</span>=<span class="hljs-string">"name"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">use:validity</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"email"</span>&gt;</span>email<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"email"</span> <span class="hljs-attr">bind:value</span>=<span class="hljs-string">"{$values.email}"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">IfError</span> <span class="hljs-attr">at</span>=<span class="hljs-string">"email"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"submit"</span>&gt;</span>Submit<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"reset"</span>&gt;</span>reset<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></code></pre>
+				<a href="#api" id="api" style="color: inherit; text-decoration: none;">
+					<h2>API</h2>
+				</a>
+				<p><code>svelte-formup</code> exports two functions:</p>
+				<ul>
+					<li><a href="https://svelte-form.js.org/globals.html#formup">formup(options)</a> is the main entrypoint which creates the <a href="https://svelte-form.js.org/interfaces/_svelte_formup_.formupcontext.html">form context</a></li>
+					<li><a href="https://svelte-form.js.org/globals.html#getformcontext">getFormupContext()</a> allows to access the <a href="https://svelte-form.js.org/interfaces/_svelte_formup_.formupcontext.html">form context</a> through the <a href="https://svelte.dev/docs#getContext">svelte context</a></li>
+				</ul>
+				<a href="#polyfills" id="polyfills" style="color: inherit; text-decoration: none;">
+					<h2>Polyfills</h2>
+				</a>
+				<ul>
+					<li><a href="https://caniuse.com/#feat=mdn-api_nodelist_foreach">NodeList#forEach()</a>: Edge &gt;= 16, Safari &gt;=10</li>
+					<li><a href="https://caniuse.com/#feat=mdn-javascript_builtins_object_assign">Object.assign()</a>: Edge &gt;= 12</li>
+					<li><a href="https://caniuse.com/#feat=abortcontroller">AbortController</a>: Edge &gt;= 16</li>
+					<li><a href="https://caniuse.com/#feat=mdn-javascript_builtins_weakset">WeakSet</a>: Edge &gt;= 12</li>
+					<li><a href="https://caniuse.com/#feat=promises">Promise</a>: Edge &gt;= 12</li>
+					<li><a href="https://caniuse.com/#search=Symbol.for">Symbol.for</a>: Edge &gt;= 12</li>
+					<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of">for...of</a>: Edge &gt;= 12</li>
+					<li><a href="https://caniuse.com/#feat=async-functions">async-await</a>: Edge &gt;= 15</li>
+					<li><a href="https://caniuse.com/#feat=mdn-javascript_operators_destructuring">Destructuring assignment</a>: Edge &gt;= 14</li>
+				</ul>
+				<a href="#todo" id="todo" style="color: inherit; text-decoration: none;">
+					<h2>TODO</h2>
+				</a>
+				<ul>
+					<li><input disabled="" type="checkbox"> add css class for each test per node: <code>yup.string().email().required()</code> =&gt; <code>email required</code></li>
+					<li><input disabled="" type="checkbox"> what about invalid path (validate and validateAt)</li>
+					<li><input disabled="" type="checkbox"> debounce during testing: <a href="https://jestjs.io/docs/en/timer-mocks">Timer Mocks</a></li>
+					<li><input disabled="" type="checkbox"> add aria based on schema: <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/forms">ARIA Forms</a></li>
+					<li><input disabled="" type="checkbox"> how to handle disabled fields, skip validation?</li>
+					<li><input disabled="" type="checkbox"> a guide how to implement a custom component</li>
+					<li><input disabled="" type="checkbox"> focus first error field after submit with error</li>
+					<li><input disabled="" type="checkbox"> on focus add css class: maybe a focused store?</li>
+					<li><input disabled="" type="checkbox"> provides IfError, Input, Select, Choice components using yup schema values to reduce boilerplate via &#39;svelte-formup-components&#39;</li>
+					<li><input disabled="" type="checkbox"> svelte-society/recipes-mvp recipy: <a href="https://github.com/svelte-society/recipes-mvp/pull/47/files">form validation with yup</a></li>
+					<li><input disabled="" type="checkbox"> examples like <a href="https://joepuzzo.github.io/informed">informed</a></li>
+				</ul>
+				<a href="#related-projects" id="related-projects" style="color: inherit; text-decoration: none;">
+					<h2>Related Projects</h2>
+				</a>
+				<ul>
+					<li><a href="https://www.npmjs.com/package/svelte-jsx">svelte-jsx</a> - write svelte components using [jsx] to simplify testing</li>
+					<li><a href="https://www.npmjs.com/package/svelte-htm">svelte-htm</a> - <a href="https://www.npmjs.com/package/htm"><strong>H</strong>yperscript <strong>T</strong>agged <strong>M</strong>arkup</a> for svelte to simplify testing</li>
+					<li><a href="https://testing-library.com/docs/svelte-testing-library/intro">@testing-library/svelte</a> - helps to test UI components in a user-centric way</li>
+				</ul>
+				<a href="#support" id="support" style="color: inherit; text-decoration: none;">
+					<h2>Support</h2>
+				</a>
+				<p>This project is free and open-source, so if you think this project can help you or anyone else, you may <a href="https://github.com/kenoxa/svelte-formup">star it on GitHub</a>. Feel free to <a href="https://github.com/kenoxa/svelte-formup/issues">open an issue</a> if you have any idea, question, or you&#39;ve found a bug.</p>
+				<a href="#contribute" id="contribute" style="color: inherit; text-decoration: none;">
+					<h2>Contribute</h2>
+				</a>
+				<p>Thanks for being willing to contribute!</p>
+				<p><strong>Working on your first Pull Request?</strong> You can learn how from this <em>free</em> series <a href="https://egghead.io/series/how-to-contribute-to-an-open-source-project-on-github">How to Contribute to an Open Source Project on GitHub</a></p>
+				<p>We are following the <a href="https://www.conventionalcommits.org">Conventional Commits</a> convention.</p>
+				<a href="#develop" id="develop" style="color: inherit; text-decoration: none;">
+					<h3>Develop</h3>
+				</a>
+				<ul>
+					<li><code>npm start</code>: Starts a <a href="https://snowpack.dev">snowpack</a> dev server using <code>src/__preview__</code></li>
+					<li><code>npm test</code>: Run test suite including linting</li>
+					<li><code>npm run build</code>: Generate bundles</li>
+				</ul>
+				<a href="#npm-statistics" id="npm-statistics" style="color: inherit; text-decoration: none;">
+					<h2>NPM Statistics</h2>
+				</a>
+				<p><a href="https://nodei.co/npm/svelte-formup/"><img src="https://nodei.co/npm/svelte-formup.png" alt="NPM"></a></p>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
+				<p><code>svelte-formup</code> is open source software <a href="https://github.com/kenoxa/svelte-formup/blob/main/LICENSE">licensed as MIT</a>.</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" tsd-kind-module">
+						<a href="globals.html">&quot;svelte-<wbr>formup&quot;</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
