@@ -1,0 +1,64 @@
+name: docs
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Release Please
+        uses: GoogleCloudPlatform/release-please-action@v1.3.2
+        id: release
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: node
+
+      # The logic below handles the npm publication:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+          registry-url: https://registry.npmjs.org/
+
+      - name: Cache ~/.npm
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: npm-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            npm-${{ runner.os }}
+            npm-
+
+      - name: Cache ./node_modules
+        id: cache-modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node_modules-${{ runner.os }}-12.x-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install
+        if: steps.cache-modules.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Generate
+        run: npm run typedoc
+
+      - name: Create docs/CNAME
+        uses: finnp/create-file-action@master
+        env:
+          FILE_NAME: docs/CNAME
+          FILE_DATA: svelte-formup.js.org
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BASE_BRANCH: main
+          BRANCH: gh-pages
+          FOLDER: docs
+          CLEAN: true

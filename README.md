@@ -35,14 +35,12 @@ Styling forms in a consistent way has always been a problem. Everyone has her ow
 
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Displaying Error Message](#displaying-error-message)
 - [API](#api)
 - [Polyfills](#polyfills)
 - [TODO](#todo)
 - [Related Projects](#related-projects)
 - [Support](#support)
 - [Contribute](#contribute)
-  - [Develop](#develop)
 - [NPM Statistics](#npm-statistics)
 - [License](#license)
 
@@ -197,8 +195,8 @@ This could be used like (omitting identical code for brevity) ([Open in REPL](ht
 
 `svelte-formup` exports two functions:
 
-- [formup(options)](#formupoptions) is the main entrypoint which creates the [form context](#form-context-object)
-- [getFormupContext()](#getformcontext) allows to access the [form context](#form-context-object) through the [svelte context](https://svelte.dev/docs#getContext)
+- [formup(options)](https://svelte-form.js.org/globals.html#formup) is the main entrypoint which creates the [form context](https://svelte-form.js.org/interfaces/_svelte_formup_.formupcontext.html)
+- [getFormupContext()](https://svelte-form.js.org/globals.html#getformcontext) allows to access the [form context](https://svelte-form.js.org/interfaces/_svelte_formup_.formupcontext.html) through the [svelte context](https://svelte.dev/docs#getContext)
 
 ## Polyfills
 

@@ -12,7 +12,7 @@
     "html5",
     "form-validation"
   ],
-  "homepage": "https://github.com/kenoxa/svelte-formup#readme",
+  "homepage": "https://svelte-formup.js.org",
   "bugs": {
     "url": "https://github.com/kenoxa/svelte-formup/issues"
   },
@@ -40,7 +40,7 @@
     "preset": "@carv/snowpack-scripts"
   },
   "devDependencies": {
-    "@carv/snowpack-scripts": "^1.0.7",
+    "@carv/snowpack-scripts": "^1.0.8",
     "@testing-library/svelte": "^3.0.0",
     "@testing-library/user-event": "^12.0.11",
     "@types/yup": "^0.29.1",
