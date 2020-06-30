@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  release-please:
+  gh-pages:
     runs-on: ubuntu-latest
     steps:
       - name: Release Please
@@ -49,10 +49,13 @@ jobs:
         run: npm run typedoc
 
       - name: Create docs/CNAME
-        uses: finnp/create-file-action@master
-        env:
-          FILE_NAME: docs/CNAME
-          FILE_DATA: svelte-formup.js.org
+        uses: actions/github-script@v2
+        with:
+          script: |
+            const fs = require('fs')
+            const { homepage } = require('./package.json')
+            const { hostname } = new URL(homepage)
+            fs.writeFileSync('./docs/CNAME', hostname)
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
