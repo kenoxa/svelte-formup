@@ -33,7 +33,6 @@ Styling forms in a consistent way has always been a problem. Everyone has her ow
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [Installation](#installation)
 - [Usage](#usage)
   - [Displaying Error Message](#displaying-error-message)
@@ -247,9 +246,9 @@ We are following the [Conventional Commits](https://www.conventionalcommits.org)
 
 ### Develop
 
-- `npm test`: Run test suite
+- `npm start`: Starts a [snowpack](https://snowpack.dev) dev server using `src/__preview__`
+- `npm test`: Run test suite including linting
 - `npm run build`: Generate bundles
-- `npm run lint`: Lints code
 
 ## NPM Statistics
 
