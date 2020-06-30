@@ -6,6 +6,7 @@ import { noop, subscribe, blank_object } from 'svelte/internal'
 import { asArray } from './internal/utils'
 import validateAction from './internal/validate'
 import validityAction from './internal/validity'
+import isNode from './internal/is-node'
 
 import {
   EventName,
@@ -118,6 +119,8 @@ export interface FormupOptions<Values = Record<string, unknown>, State = Record<
 
   /**
    * Timeout in milliseconds after which field level validation should start.
+   *
+   * If platform is Node.JS this defaults to `0`.
    * @default 100
    */
   debounce?: number
@@ -153,7 +156,7 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
   state = blank_object() as State,
   validateOn = 'change',
   dirtyOn = validateOn,
-  debounce = 100,
+  debounce = isNode ? 0 : 100,
   classes = {},
 }: FormupOptions<Values, State>): FormupContext<Values, State> => {
   const values = writable(getInitialValues())

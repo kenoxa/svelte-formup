@@ -2,4 +2,4 @@
   import BasicForm from '../__fixtures__/basic-form.svelte'
 </script>
 
-<BasicForm debounce={100} />
+<BasicForm delay={500} />

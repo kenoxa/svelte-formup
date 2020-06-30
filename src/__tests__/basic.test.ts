@@ -16,6 +16,9 @@ test('async validation', async () => {
 
   const email = screen.getByRole('textbox', { name: /email/i })
 
+  expect(email).toHaveClass('valid', 'pristine')
+  expect(email).not.toHaveClass('invalid', 'dirty', 'validating')
+
   await userEvent.type(email, 'in@use.com')
 
   await waitFor(() => expect(email).toHaveClass('valid', 'dirty', 'validating'))

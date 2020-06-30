@@ -5,7 +5,7 @@
 
   import IfError from './if-error.svelte'
 
-  export let debounce = 0
+  export let delay = 0
 
   const { values, validate, validity } = formup({
     schema: yup.object().shape({
@@ -19,7 +19,7 @@
           message: '${path} must be unique',
           test(value: string | undefined): Promise<boolean> {
             return new Promise((resolve) => {
-              setTimeout(resolve, debounce, value !== 'in@use.com')
+              setTimeout(resolve, delay, value !== 'in@use.com')
             })
           },
         })
@@ -28,7 +28,6 @@
     onSubmit(data, context) {
       console.log('onSubmit', { data, context })
     },
-    debounce,
   })
 </script>
 
