@@ -54,6 +54,6 @@ jobs:
 
       - name: Publish
         if: ${{ steps.release.outputs.release_created }}
-        run: npm publish
+        run: npm start release
         env:
           NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}

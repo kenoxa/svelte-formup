@@ -13,7 +13,7 @@
     }),
     onSubmit(data, context) {
       console.log('onSubmit', { data, context })
-    }
+    },
   })
 </script>
 
@@ -21,7 +21,7 @@
   <p use:validity>
     <label for="title">title</label>
     <select id="title" bind:value={$values.title}>
-      <option></option>
+      <option />
       <option>Mr.</option>
       <option>Mrs.</option>
       <option>Mx.</option>
@@ -37,7 +37,7 @@
 
   <p use:validity>
     <label for="email">email</label>
-    <input id="email" bind:value={$values.email} use:validate={{validateOn: ['input']}} />
+    <input id="email" bind:value={$values.email} use:validate={{ on: 'input' }} />
     <IfError at="email" />
   </p>
 

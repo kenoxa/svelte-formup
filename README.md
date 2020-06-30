@@ -28,7 +28,61 @@
 
 Adding [yup] allows to define a schema for value parsing and validation. Yup schema are extremely expressive and allow modeling complex, interdependent validations, or value transformations.
 
-Styling forms in a consistent way has always been a problem. Everyone has her own opinion about it. `svelte-formup` allows flexibel error reporting supporting both [native](https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation) and programmatic usage. Invalid form elements [a marked](https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement/setCustomValidity) supporting several form state specific css selectors like [:invalid](https://developer.mozilla.org/en-US/docs/Web/CSS/:invalid). Additionally `svelte-formup` adds CSS classes (`invalid`, `valid`, `touched` and `untouched`) for further custom styling. This classes maybe added to surrounding fieldsets or form group element depending on the validity state of the contained form elements.
+Styling forms in a consistent way has always been a problem. Everyone has her own opinion about it. `svelte-formup` allows flexibel error reporting supporting both [native](https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation) and programmatic usage. Invalid form elements [are marked](https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement/setCustomValidity) supporting several validity state specific css selectors like [:invalid](https://developer.mozilla.org/en-US/docs/Web/CSS/:invalid). Additionally `svelte-formup` adds CSS classes (`invalid`, `valid`, `dirty`, `pristine`, `validating`, `submitting` and `submitted`) for further custom styling. These classes maybe added to surrounding fieldsets or form group element depending on the validity state of the contained form elements.
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [svelte-formup](#svelte-formup)
+  - [What?](#what)
+  - [Why?](#why)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Displaying Error Message](#displaying-error-message)
+  - [API](#api)
+    - [formup(options)](#formupoptions)
+      - [Options](#options)
+        - [schema: a [yup] compatible validation schema](#schema-a-yup-compatible-validation-schema)
+        - [onSubmit?(values: any, context: FormContext): void | Promise<void> = noop](#onsubmitvalues-any-context-formcontext-void--promisevoid--noop)
+        - [onReset?(context: FormContext): void = noop](#onresetcontext-formcontext-void--noop)
+        - [getInitialValues?(): any = Object](#getinitialvalues-any--object)
+        - [validateInitialValues?: boolean = false](#validateinitialvalues-boolean--false)
+        - [validateOn?: string | string[] = 'change'](#validateon-string--string--change)
+        - [touchedOn?: string[] = validateOn](#touchedon-string--validateon)
+        - [debounce?: number = 100](#debounce-number--100)
+      - [Form Context Object](#form-context-object)
+        - [values: SvelteStore\<Object>](#values-sveltestoreobject)
+        - [errors: SvelteStore\<Map\<string, ValidationError>>](#errors-sveltestoremapstring-validationerror)
+        - [touched: SvelteStore\<Set\<string>>](#touched-sveltestoresetstring)
+        - [validating: SvelteStore\<Set\<string>>](#validating-sveltestoresetstring)
+        - [isValidating: SvelteStore\<boolean>](#isvalidating-sveltestoreboolean)
+        - [isSubmitting: SvelteStore\<boolean>](#issubmitting-sveltestoreboolean)
+        - [submitCount: SvelteStore\<number>](#submitcount-sveltestorenumber)
+        - [isValid: SvelteStore\<boolean>](#isvalid-sveltestoreboolean)
+        - [isTouched: SvelteStore\<boolean>](#istouched-sveltestoreboolean)
+        - [handleSubmit(): Promise\<any>](#handlesubmit-promiseany)
+        - [handleReset(): void](#handlereset-void)
+        - [setErrorAt(path: string, error?: ValidationError | null): void](#seterroratpath-string-error-validationerror--null-void)
+        - [setTouchedAt(path: string, isTouched: boolean = true): void](#settouchedatpath-string-istouched-boolean--true-void)
+        - [setValidatingAt(path: string, isValidating: boolean = true): void](#setvalidatingatpath-string-isvalidating-boolean--true-void)
+        - [validateAt(path: string, { debounce = context.debounce } = {}): void](#validateatpath-string--debounce--contextdebounce----void)
+      - [validate(node, options: string | { at?: string, on?: string | string[], validateOn?: string | string[], touchedOn?: string | string[], debounce: number } = {})](#validatenode-options-string---at-string-on-string--string-validateon-string--string-touchedon-string--string-debounce-number---)
+        - [validity(node, options: string | { at?: string } = {})](#validitynode-options-string---at-string---)
+        - [schema: Schema](#schema-schema)
+        - [validateOn: string[]](#validateon-string)
+        - [touchedOn: string[]](#touchedon-string)
+        - [debounce: number](#debounce-number)
+    - [getFormupContext()](#getformupcontext)
+  - [Polyfills](#polyfills)
+  - [TODO](#todo)
+  - [Related Projects](#related-projects)
+  - [Support](#support)
+  - [Contribute](#contribute)
+    - [Develop](#develop)
+  - [NPM Statistics](#npm-statistics)
+  - [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Installation
 
@@ -46,22 +100,7 @@ import { formup } from 'svelte-formup'
 const { formup } = require('svelte-formup')
 ```
 
-Alternatively use [UNPKG](https://unpkg.com/svelte-formup/) or [jsDelivr](https://cdn.jsdelivr.net/npm/svelte-formup/) packages:
-
-With script tags and globals:
-
-```html
-<!-- UNPKG -->
-<script src="https://unpkg.com/svelte-formup"></script>
-
-<!-- jsDelivr -->
-<script src="https://cdn.jsdelivr.net/npm/svelte-formup"></script>
-
-<script>
-  <!-- And then grab it off the global like so: -->
-  const { formup } = svelteFormup
-</script>
-```
+Alternatively use [UNPKG](https://unpkg.com/svelte-formup/) or [jsDelivr](https://cdn.jsdelivr.net/npm/svelte-formup/) packages.
 
 Hotlinking from unpkg: _(no build tool needed!)_
 
@@ -363,8 +402,8 @@ The optional options allow to override some context properties for this validati
 - `validateOn`: an event name or an array event names; defaults to form context `validateOn`
 
   ```html
-  <input use:validate={{ validateOn: ['input', 'change'] }}>
-  <input use:validate={{ validateOn: 'blur' }}>
+  <input use:validate={{ validateOn: ['input', 'change'] }}> <input use:validate={{ validateOn:
+  'blur' }}>
   ```
 
 - `touchedOn`: an event name or an array event names; defaults to `validateOn` and then form context `validateOn`
@@ -400,11 +439,11 @@ The optional options allow to override some context properties for this validati
 
 If the element is a form it registers `submit` and `reset` listeners.
 
-If no path has been found is listens for the `validateOn` and `touched` events for itself and all its children.
+If no path has been found is listens for the `validateOn` and `dirty` events for itself and all its children.
 
 ##### validity(node, options: string | { at?: string } = {})
 
-A [svelte action](https://svelte.dev/docs#use_action) to update the validity state of the element and all its form children it is applied to.That means updating `setCustomValidity` and the css classes `valid`, `invalid`, `touched` and `untouched`.
+A [svelte action](https://svelte.dev/docs#use_action) to update the validity state of the element and all its form children it is applied to.That means updating `setCustomValidity`, `aria-invalid` and the css classes `valid`, `invalid`, `dirty`, `pristine`, `validating`, `submitting` and `submitted`.
 
 ```html
 <script>
@@ -418,7 +457,7 @@ A [svelte action](https://svelte.dev/docs#use_action) to update the validity sta
 </form>
 ```
 
-- `at`: allows to define for which attribute the validitiy should be tracked.
+- `at`: allows to define for which attribute the validity should be tracked.
 
   ```html
   <input use:validate={{ at: 'email' }}>
@@ -476,6 +515,7 @@ Returns the [form context](#form-context-object).
 - [AbortController](https://caniuse.com/#feat=abortcontroller): Edge >= 16
 - [WeakSet](https://caniuse.com/#feat=mdn-javascript_builtins_weakset): Edge >= 12
 - [Promise](https://caniuse.com/#feat=promises): Edge >= 12
+- [Symbol.for](https://caniuse.com/#search=Symbol.for): Edge >= 12
 - [for...of](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of): Edge >= 12
 - [async-await](https://caniuse.com/#feat=async-functions): Edge >= 15
 - [Destructuring assignment](https://caniuse.com/#feat=mdn-javascript_operators_destructuring): Edge >= 14
@@ -484,13 +524,12 @@ Returns the [form context](#form-context-object).
 
 - [ ] add css class for each test per node: `yup.string().email().required()` => `email required`
 - [ ] what about invalid path (validate and validateAt)
+- [ ] add aria based on schema: [ARIA Forms](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/forms)
 - [ ] how to handle disabled fields, skip validation?
 - [ ] a guide how to implement a custom component
-- [ ] use eslint with xo config and patch
 - [ ] focus first error field after submit with error
 - [ ] on focus add css class: maybe a focused store?
 - [ ] provides IfError, Input, Select, Choice components using yup schema values to reduce boilerplate via 'svelte-formup-components'
-- [ ] configurable validity class names
 - [ ] svelte-society/recipes-mvp recipy: https://github.com/svelte-society/recipes-mvp/pull/47/files
 
 ## Related Projects
