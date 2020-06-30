@@ -48,15 +48,6 @@ jobs:
       - name: Generate
         run: npm run typedoc
 
-      - name: Create docs/CNAME
-        uses: actions/github-script@v2
-        with:
-          script: |
-            const fs = require('fs')
-            const { homepage } = require('./package.json')
-            const { hostname } = new URL(homepage)
-            fs.writeFileSync('./docs/CNAME', hostname)
-
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:

@@ -29,7 +29,7 @@
     "release": "nps release",
     "start": "nps",
     "test": "nps test",
-    "typedoc": "typedoc"
+    "typedoc": "typedoc && echo 'svelte-formup.js.org' > docs/CNAME"
   },
   "prettier": "@carv/prettier-config",
   "eslintConfig": {
