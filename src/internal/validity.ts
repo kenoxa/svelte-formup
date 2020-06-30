@@ -167,7 +167,7 @@ export default function validity<Values, State>(
       // Update classes on this node based on this node validity
       dispose = [
         subscribeTo(node, context.classes, context.errors, updateStoreValidity),
-        subscribeTo(node, context.classes, context.touched, updateStoreDirty),
+        subscribeTo(node, context.classes, context.dirty, updateStoreDirty),
         subscribeTo(node, context.classes, context.validating, updateStoreValidating),
       ]
     } else if (isHTMLFormElement(node)) {
@@ -209,7 +209,7 @@ export default function validity<Values, State>(
         subscribeToElements(
           node,
           context.classes,
-          context.touched,
+          context.dirty,
           updateStoreDirty,
           withSome(updateDirty),
         ),

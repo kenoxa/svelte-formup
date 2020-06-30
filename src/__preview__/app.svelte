@@ -1,5 +1,5 @@
-<script>
-  import BasicForm from '../__fixtures__/basic-form'
+<script lang="typescript">
+  import BasicForm from '../__fixtures__/basic-form.svelte'
 </script>
 
-<BasicForm />
+<BasicForm debounce={100} />

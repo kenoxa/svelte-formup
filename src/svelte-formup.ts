@@ -28,6 +28,17 @@ const setAt = (store: Writable<Set<string>>, path: string, value: boolean): void
 
 export * from './types'
 
+/**
+ * Returns the FormContext.
+ *
+ * ```html
+ * <script>
+ *   import { getFormupContext } from 'svelte-formup'
+
+ *   const context = getFormupContext()
+ * </script>
+ * ```
+ */
 export const getFormupContext = <
   Values = Record<string, unknown>,
   State = Record<string, unknown>
@@ -52,7 +63,9 @@ interface ValidateState {
 
 export interface FormupOptions<Values = Record<string, unknown>, State = Record<string, unknown>> {
   /**
-   * A yup like schema to perform validation.
+   * A [yup](https://www.npmjs.com/package/yup) like schema to perform validation.
+   *
+   * The object does not have to be yup schema. This allows custom validation without using yup.
    */
   schema: FormupSchema<Values>
 
@@ -69,25 +82,68 @@ export interface FormupOptions<Values = Record<string, unknown>, State = Record<
   onReset?: (context: FormupContext<Values, State>) => void
 
   /**
-   * Use this if you want to populate the form with initial values.
+   * A function called to initialize the form values on creation and reset. The default returns an empty object.
+   *
+   * @default () => Object.create(null)
    */
-  getInitialValues?: () => Values
+  getInitialValues?: () => NonNullable<Values>
 
   /**
-   * Should the initial values be validated.
+   * Use this option to run validations each time after `getInitialValues()` has been called.
+   *
+   * @default false
    */
   validateInitialValues?: boolean
 
+  /**
+   * A top-level status object that you can use to represent form state that can't otherwise be expressed/stored with other methods.
+   *
+   * This is useful for capturing and passing through API responses to your inner component.
+   *
+   * @default Object.create(null)
+   */
   state?: State
+
+  /**
+   * Which events should trigger a validation.
+   * @default "change"
+   */
   validateOn?: EventName | EventName[]
-  touchedOn?: EventName | EventName[]
+
+  /**
+   * Which events should mark a field as dirty.
+   * @default validateOn
+   */
+  dirtyOn?: EventName | EventName[]
+
+  /**
+   * Timeout in milliseconds after which field level validation should start.
+   * @default 100
+   */
   debounce?: number
+
+  /**
+   * Allow to override the used CSS classes.
+   */
   classes?: ValidityCSSClasses
 }
 
 const isEmpty = ({ size }: { size: number }): boolean => size === 0
 const negate = (value: boolean): boolean => !value
 
+/**
+ * Creates and registers a new [form context](#form-context-object) using [options](#options) and returns it.
+ *
+ * ```html
+ * <script>
+ *   import { formup } from 'svelte-formup'
+ *
+ *   const context = formup(options)
+ * </script>
+ * ```
+ *
+ * @param options to use
+ */
 export const formup = <Values = Record<string, unknown>, State = Record<string, unknown>>({
   schema,
   onSubmit = noop,
@@ -96,14 +152,14 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
   validateInitialValues = false,
   state = blank_object() as State,
   validateOn = 'change',
-  touchedOn = validateOn,
+  dirtyOn = validateOn,
   debounce = 100,
   classes = {},
 }: FormupOptions<Values, State>): FormupContext<Values, State> => {
   const values = writable(getInitialValues())
 
   const errors = writable(new Map<string, Error>())
-  const touched = writable(new Set<string>())
+  const dirty = writable(new Set<string>())
   const validating = writable(new Set<string>())
 
   const isSubmitting = writable(false)
@@ -111,7 +167,7 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
   const isSubmitted = writable(false)
 
   const isValid = derived(errors, isEmpty)
-  const isPristine = derived(touched, isEmpty)
+  const isPristine = derived(dirty, isEmpty)
 
   const submitCount = writable(0)
 
@@ -128,8 +184,8 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
 
   const setError: FormupContext['setError'] = (error) => setErrorAt('', error)
 
-  const setTouchedAt: FormupContext['setTouchedAt'] = (path, isTouched = true) =>
-    setAt(touched, path, isTouched)
+  const setDirtyAt: FormupContext['setDirtyAt'] = (path, isDirty = true) =>
+    setAt(dirty, path, isDirty)
 
   const setValidatingAt: FormupContext['setValidatingAt'] = (path, isValidating = true) =>
     setAt(validating, path, isValidating)
@@ -145,7 +201,7 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
 
     // These are objects keyed by path
     errors,
-    touched,
+    dirty,
     validating,
 
     // These are whole form related stores
@@ -177,7 +233,7 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
       abortActiveValidateAt()
 
       try {
-        const data = await validate()
+        const data = await validate(/* strict */ true)
 
         if (data) {
           const result = await onSubmit(data, context)
@@ -203,7 +259,7 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
 
       abortActiveValidateAt()
 
-      touched.set(new Set())
+      dirty.set(new Set())
       errors.set(new Map())
 
       submitCount.set(0)
@@ -218,7 +274,7 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
 
     // Methods to update specific paths
     setErrorAt,
-    setTouchedAt,
+    setDirtyAt,
     setValidatingAt,
 
     validateAt,
@@ -229,7 +285,7 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
 
     // Passed in options
     validateOn: asArray(validateOn),
-    touchedOn: asArray(touchedOn),
+    dirtyOn: asArray(dirtyOn),
     debounce,
     classes,
   }
@@ -257,7 +313,7 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
 
   return context
 
-  async function validate(): Promise<Values | void> {
+  async function validate(strict?: boolean): Promise<Values | void> {
     validateAbortController?.abort()
     validateAbortController = new AbortController()
     const currentController = validateAbortController
@@ -267,6 +323,7 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
     try {
       const data = await schema.validate(currentValues, {
         abortEarly: false,
+        strict,
         context: createValidateContext(validateAbortController),
       })
 
@@ -282,19 +339,21 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
       if (currentController === validateAbortController) {
         const newErrors = new Map<string, ValidationError>()
 
-        touched.update((touched) => {
+        dirty.update((dirty) => {
           ;[]
-            .concat((error as ValidationError).inner || error)
+            .concat(
+              (error as ValidationError).inner?.length ? (error as ValidationError).inner : error,
+            )
             .forEach((error: ValidationError) => {
               if (error.path) {
                 newErrors.set(error.path, error)
-                touched.add(error.path)
+                dirty.add(error.path)
               } else {
                 setError(error)
               }
             })
 
-          return touched
+          return dirty
         })
 
         errors.set(newErrors)
@@ -333,12 +392,15 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
     state.c?.abort()
 
     clearTimeout(state.t)
-    state.t = (setTimeout as Window['setTimeout'])(doValidateAt, debounce, path, state, debounce)
+    state.t =
+      debounce > 0
+        ? (setTimeout as Window['setTimeout'])(doValidateAt, debounce, path, state, debounce)
+        : void doValidateAt(path, state, debounce) // eslint-disable-line no-void
   }
 
   async function doValidateAt(path: string, state: ValidateState, debounce: number): Promise<void> {
     // Have at least debounce milliseconds passed between validation calls for this field
-    if (Date.now() - state.l < debounce) {
+    if (debounce > 0 && Date.now() - state.l < debounce) {
       return validateAt(path, { debounce })
     }
 

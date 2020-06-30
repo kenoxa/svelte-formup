@@ -27,7 +27,7 @@ const listenOn = (
 
 // For nested use:validate we want to handle events only once at the closest use:validate
 const VALIDATE_EVENTS = new WeakSet<Event>()
-const TOUCHED_EVENTS = new WeakSet<Event>()
+const DIRTY_EVENTS = new WeakSet<Event>()
 const dedupeEvents = (events: WeakSet<Event>, listener: EventListener) => (event: Event) => {
   if (!events.has(event)) {
     events.add(event)
@@ -56,14 +56,14 @@ export default function validate<Values, State>(
       at: path = findSchemaPathForElement(node),
       debounce = context.debounce,
       validateOn = options.on || context.validateOn,
-      touchedOn = options.validateOn || context.touchedOn,
+      dirtyOn = options.on || options.validateOn || context.dirtyOn,
     } = options
 
     // Activate css classes; managed by validity action
     dispose = [context.validity(node, options).destroy]
 
     const validateAt = (path: string): void => context.validateAt(path, { debounce })
-    const touchedAt = (path: string): void => context.setTouchedAt(path)
+    const dirtyAt = (path: string): void => context.setDirtyAt(path)
 
     if (path) {
       // Update classes on this node based on this node validity
@@ -75,8 +75,8 @@ export default function validate<Values, State>(
         ),
         ...listenOn(
           node,
-          touchedOn,
-          dedupeEvents(TOUCHED_EVENTS, () => touchedAt(path)),
+          dirtyOn,
+          dedupeEvents(DIRTY_EVENTS, () => dirtyAt(path)),
         ),
       )
     } else {
@@ -96,7 +96,7 @@ export default function validate<Values, State>(
 
       dispose.push(
         ...listenOn(node, validateOn, dedupeEvents(VALIDATE_EVENTS, listenWith(validateAt))),
-        ...listenOn(node, touchedOn, dedupeEvents(TOUCHED_EVENTS, listenWith(touchedAt))),
+        ...listenOn(node, dirtyOn, dedupeEvents(DIRTY_EVENTS, listenWith(dirtyAt))),
       )
     }
   }

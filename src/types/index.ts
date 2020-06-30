@@ -42,8 +42,19 @@ export interface SvelteActionResult<P> {
   destroy?: () => void
 }
 
+/**
+ * A [svelte action](https://svelte.dev/docs#use_action) to be applied on a element
+ */
 export type SvelteAction<P> = (node: Element, parameters?: P) => SvelteActionResult<P>
 
+/**
+ * A DOM event. Common events are:
+ *
+ * - [change](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event)
+ * - [input](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event)
+ * - [focus](https://developer.mozilla.org/en-US/docs/Web/API/Element/focus_event)
+ * - [blur](https://developer.mozilla.org/en-US/docs/Web/API/Element/blur_event)
+ */
 export type EventName = keyof GlobalEventHandlersEventMap | string
 
 export interface ValidateOptions<
@@ -51,22 +62,30 @@ export interface ValidateOptions<
   State = Record<string, unknown>
 > {
   /**
-   * Only validate the input, and skip and coercion or transformation. Default - false
+   * Only validate the input, and skip and coercion or transformation.
+   *
+   * @default true
    */
   strict?: boolean
 
   /**
-   * Return from validation methods on the first error rather than after all validations run. Default - true
+   * Return from validation methods on the first error rather than after all validations run.
+   *
+   * @default true
    */
   abortEarly?: boolean
 
   /**
-   * Remove unspecified keys from objects. Default - false
+   * Remove unspecified keys from objects.
+   *
+   * @default true
    */
   stripUnknown?: boolean
 
   /**
-   * When false validations will not descend into nested schema (relevant for objects or arrays). Default - true
+   * When false validations will not descend into nested schema (relevant for objects or arrays).
+   *
+   * @default true
    */
   recursive?: boolean
 
@@ -80,38 +99,107 @@ export interface ValidateContext<
   Values = Record<string, unknown>,
   State = Record<string, unknown>
 > {
+  /**
+   * The formup context.
+   */
   formup: FormupContext<Values, State>
+
+  /**
+   * To be notified if the validation is longer needed.
+   */
   signal: AbortSignal
 }
 
+/**
+ * A [yup](https://www.npmjs.com/package/yup) like schema to perform validation.
+ */
 export interface FormupSchema<Values = Record<string, unknown>, State = Record<string, unknown>> {
+  /**
+   * Returns the value (a cast value if `options.strict` is false) if the value is valid,
+   * and throws the errors otherwise.
+   *
+   * This method is asynchronous and returns a Promise object, that is fulfilled with the value, or rejected with a ValidationError.
+   *
+   * @param value the data to validate
+   * @param options an object hash containing any schema options you may want to override (or specify for the first time).
+   * @throws ValidationError
+   */
   validate(value: unknown, options?: ValidateOptions<Values, State>): Promise<Values>
-  validateAt<T>(path: string, value: T, options?: ValidateOptions<Values, State>): Promise<T>
+
+  /**
+   * Validate a deeply nested path within the schema. Similar to how reach works, but uses the resulting schema as the subject for validation.
+   *
+   * @param path to validate
+   * @param value the root value relative to the starting schema, not the value at the nested path.
+   * @param options an object hash containing any schema options you may want to override (or specify for the first time).
+   * @throws ValidationError
+   */
+  validateAt(path: string, value: Values, options?: ValidateOptions<Values, State>): Promise<Values>
 }
 
 export interface ValidityCSSClasses {
+  /**
+   * Set on the element if it or all its children is valid.
+   * @default "valid"
+   */
   readonly valid?: string
+
+  /**
+   * Set on the element if it or any of its children is invalid.
+   * @default "invalid"
+   */
   readonly invalid?: string
+
+  /**
+   * Set on the element if it or all its children is pristine.
+   * @default "pristine"
+   */
   readonly pristine?: string
+
+  /**
+   * Set on the element if it or any of its children is dirty.
+   * @default "dirty"
+   */
   readonly dirty?: string
+
+  /**
+   * Set on the element if it or any of its children is validating.
+   * @default "validating"
+   */
   readonly validating?: string
+
+  /**
+   * Set on the form if it is submitting.
+   * @default "submitting"
+   */
   readonly submitting?: string
+
+  /**
+   * Set on the form if it is has been submitted.
+   * @default "submitted"
+   */
   readonly submitted?: string
 }
 
 export interface FormupContext<Values = Record<string, unknown>, State = Record<string, unknown>> {
   /**
-   * Used for validation.
+   * A [yup](https://www.npmjs.com/package/yup) like schema to perform validation.
    */
   readonly schema: FormupSchema<Values, State>
 
   /**
-   * Key value pair where key is the form field and value is the value entered or selected.
+   * The form values as a svelte store.
+   *
+   * ```html
+   * <input id="email" bind:value="{$values.email}" />
+   * ```
    */
-  readonly values: Writable<Values>
+  readonly values: Writable<Partial<NonNullable<Values>>>
 
   /**
-   * Custom form state.
+   * A top-level status object that you can use to represent form state that can't otherwise be expressed/stored with other methods.
+   *
+   * This is useful for capturing and passing through API responses to your inner component.
    */
   readonly state: Writable<State>
 
@@ -121,19 +209,35 @@ export interface FormupContext<Values = Record<string, unknown>, State = Record<
   readonly error: Readable<ValidationError | undefined>
 
   /**
-   * Key value pair where key is the form field and value is the error associated with that field.
+   * The form errors keyed by field path as a svelte store.
    *
-   * If a validate function is provided to an input, then when it is called this map will be modified.
+   * If a validate function is provided to a field, then when it is called this map will be modified.
+   *
+   * ```html
+   * {#if $errors.has(email)} $errors.get(email).message {/if}
+   * ```
    */
   readonly errors: Readable<ReadonlyMap<string, ValidationError>>
 
   /**
-   * Set of touched fields.
+   * The dirty fields by path as a svelte store.
+   *
+   * This allows to show errors conditionally if the user has already visited that field.
+   *
+   * ```html
+   * {#if $dirty.has(email) && $errors.has(email)} $dirty.get(email).message {/if}
+   * ```
    */
-  readonly touched: Readable<ReadonlySet<string>>
+  readonly dirty: Readable<ReadonlySet<string>>
 
   /**
-   * Set of currently validating field.
+   * The currently validating fields by path as a svelte store.
+   *
+   * This allows to show a spinner if a field is validated.
+   *
+   * ```html
+   * {#if $validating.has(email)}<Spinner />{/if}
+   * ```
    */
   readonly validating: Readable<ReadonlySet<string>>
 
@@ -204,9 +308,12 @@ export interface FormupContext<Values = Record<string, unknown>, State = Record<
   /**
    * This function will submit the form and trigger some lifecycle events.
    *
-   * 1. It will call all schema.validate.
-   * 2. It will call onSubmit if the form is valid. This function can be called manually
-   *    however it is also called if you have a `<button type='submit'>` within the `<form>`.
+   * 1. abort all active field validation
+   * 1. call all schema.validate.
+   * 2. call onSubmit if the form is valid.
+   *
+   * This function can be called manually however it is also called if you
+   * have a `<button type='submit'>` within the `<form>`.
    *
    * Repeated invocation while there is an active submit have no effect (eg are ignored).
    */
@@ -215,59 +322,204 @@ export interface FormupContext<Values = Record<string, unknown>, State = Record<
   /**
    * Function that will reset the form to its initial state.
    *
+   * This will abort all active field validation, reset all stores and call `onReset`.
+   *
    * This may have no effect (eg is ignored) if there is an active submit.
    */
   readonly reset: () => void
 
   /**
-   * Function that will set the forms error manually.
+   * Set the form error manually.
+   *
+   * If `error` is falsey means deleting the path from the store.
+   * @param error to set
    */
   readonly setError: (error?: ValidationError | undefined | null | false) => void
 
   /**
-   * Function that takes two parameters, the first is the field name, and the second is the error you want to set it to.
+   * Set the error message of a field imperatively.
+   *
+   * @param path should match the key of errors you wish to update. Useful for creating custom input error handlers.
+   * @param error to set; falsey means deleting the path from the store.
    */
   readonly setErrorAt: (path: string, error?: ValidationError | undefined | null | false) => void
 
   /**
-   * Function that takes two parameters, the first is the field name, and the second is true or false.
+   * Set the dirty state of a field imperatively.
+   *
+   * @param path should match the key of dirty you wish to update. Useful for creating custom input handlers.
+   * @param dirty to set; falsey means deleting the path from the store.
    */
-  readonly setTouchedAt: (path: string, touched?: boolean) => void
+  readonly setDirtyAt: (path: string, dirty?: boolean) => void
 
   /**
-   * Function that takes two parameters, the first is the field name, and the second is true or false.
+   * Set the validating state of a field imperatively.
+   *
+   * @param path should match the key of validating you wish to update. Useful for creating custom input handlers.
+   * @param validating to set; falsey means deleting the path from the store.
    */
   readonly setValidatingAt: (path: string, validating?: boolean) => void
 
   /**
-   * Schedule a validation for the given field.
+   * Imperatively call field's validate function if specified for given field.
    */
   readonly validateAt: (path: string, options?: ValidateAtOptions) => void
 
-  // Actions
+  /**
+   * A [svelte action](https://svelte.dev/docs#use_action) to validate the element and all its form children it is applied to.
+   *
+   * > The `validity` action is applied automatically on that node.
+   *
+   * ```html
+   * <script>
+   *   import { formup } from 'svelte-formup'
+   *
+   *   const { validate } = formup(options)
+   * </script>
+   *
+   * <form use:validate>
+   *   <!-- .... --->
+   *
+   *   <input use:validate={{ on: 'input' }}>
+   *
+   *   <!-- .... --->
+   * </form>
+   * ```
+   */
   readonly validate: SvelteAction<string | ValidateActionOptions>
+
+  /**
+   * A [svelte action](https://svelte.dev/docs#use_action) to update the validity state of
+   * the element and all its form children it is applied to.
+   *
+   * That means updating `setCustomValidity`, `aria-invalid` and the css classes `valid`,
+   * `invalid`, `dirty`, `pristine`, `validating`, `submitting` and `submitted`.
+   *
+   * ```html
+   * <script>
+   *   import { formup } from 'svelte-formup'
+   *
+   *   const { validity } = formup(options)
+   * </script>
+   *
+   * <form use:validity>
+   *   <!-- .... --->
+   * </form>
+   * ```
+   */
   readonly validity: SvelteAction<string | ValiditiyActionOptions>
 
   // Passed in options
+  /**
+   * Which events should trigger a validation.
+   */
   readonly validateOn: readonly EventName[]
-  readonly touchedOn: readonly EventName[]
+
+  /**
+   * Which events should mark a field as dirty.
+   */
+  readonly dirtyOn: readonly EventName[]
+
+  /**
+   * Timeout in milliseconds after which a validation should start.
+   */
   readonly debounce: number
+
+  /**
+   * Allow to override the used CSS classes.
+   */
   readonly classes: ValidityCSSClasses
 }
 
 export interface ValidateAtOptions {
+  /**
+   * Timeout in milliseconds after which a validation should start.
+   * @default context.debounce
+   */
   debounce?: number
 }
 
 export interface ValidateActionOptions {
+  /**
+   * What field to validate.
+   *
+   * ```html
+   * <input use:validate={{ at: 'email' }}>
+   * ```
+   *
+   * If `at` is not provided and the element is not a form it defaults to:
+   *
+   * - the [data attribute](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes) `at`
+   * - the `name` attribute
+   * - the `for` attribute
+   * - the `id` attribute
+   *
+   * If the only option is `at` it can be used directly:
+   *
+   * ```html
+   * <input use:validate={'email'}>
+   * ```
+   *
+   * If no field has been found it validates itself and all its children.
+   */
   at?: string
-  on?: EventName[]
-  validateOn?: EventName[]
-  touchedOn?: EventName[]
+
+  /**
+   * Override which events should trigger a validation and mark a field as dirty.
+   */
+  on?: EventName | EventName[]
+
+  /**
+   * Override which events should trigger a validation.
+   *
+   * ```html
+   * <input use:validate={{ validateOn: ['input', 'change'] }}>
+   *
+   * <input use:validate={{ validateOn: 'blur' }}>
+   * ```
+   *
+   * @default on || context.validateOn
+   */
+  validateOn?: EventName | EventName[]
+
+  /**
+   * Override which events should mark a field as dirty.
+   * @default on || context.dirtyOn
+   */
+  dirtyOn?: EventName | EventName[]
+
+  /**
+   * Timeout in milliseconds after which a validation should start.
+   * @default context.debounce
+   */
   debounce?: number
 }
 
 export interface ValiditiyActionOptions {
+  /**
+   * For which field to track the validity status.
+   *
+   * If the element is a form it uses `isValid` and `isDirty` stores to determines the validity.
+   *
+   * ```html
+   * <input use:validity={{ at: 'email' }}>
+   * ```
+   *
+   * If `at` is not provided and the element is not a form it defaults to:
+   *
+   * - the [data attribute](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes) `at`
+   * - the `name` attribute
+   * - the `for` attribute
+   * - the `id` attribute
+   *
+   * If the only option is `at` it can be used directly:
+   *
+   * ```html
+   * <input use:validity={'email'}>
+   * ```
+   *
+   * If no field has been found it updates the validity for itself and all its children.
+   */
   at?: string
 }
 
