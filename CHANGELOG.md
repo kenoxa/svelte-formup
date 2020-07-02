@@ -2,6 +2,13 @@
 
 # Changelog
 
+### [0.3.2](https://www.github.com/kenoxa/svelte-formup/compare/v0.3.1...v0.3.2) (2020-07-02)
+
+
+### Bug Fixes
+
+* ignore changelog in prettier ([89f1f7b](https://www.github.com/kenoxa/svelte-formup/commit/89f1f7beaa2bbd3ff74d56a06be67f28e7244dda))
+
 ### [0.3.1](https://www.github.com/kenoxa/svelte-formup/compare/v0.3.0...v0.3.1) (2020-07-02)
 
 
