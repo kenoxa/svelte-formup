@@ -1,3 +1,5 @@
+<!-- prettier-ignore-start -->
+
 # Changelog
 
 ## [0.3.0](https://www.github.com/kenoxa/svelte-formup/compare/v0.2.1...v0.3.0) (2020-07-02)

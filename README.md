@@ -30,8 +30,10 @@ Adding [yup] allows to define a schema for value parsing and validation. Yup sch
 
 Styling forms in a consistent way has always been a problem. Everyone has her own opinion about it. `svelte-formup` allows flexibel error reporting supporting both [native](https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation) and programmatic usage. Invalid form elements [are marked](https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement/setCustomValidity) supporting several validity state specific css selectors like [:invalid](https://developer.mozilla.org/en-US/docs/Web/CSS/:invalid). Additionally `svelte-formup` adds CSS classes (`is-invalid`, `is-valid`, `is-dirty`, `is-pristine`, `is-validating`, `is-submitting` and `is-submitted`) for further custom styling. These classes maybe added to surrounding fieldsets or form group element depending on the validity state of the contained form elements.
 
+<!-- prettier-ignore-start -->
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 
 - [Installation](#installation)
 - [Usage](#usage)
@@ -45,6 +47,7 @@ Styling forms in a consistent way has always been a problem. Everyone has her ow
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<!-- prettier-ignore-end -->
 
 ## Installation
 
