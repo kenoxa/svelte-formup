@@ -1,6 +1,7 @@
 import { subscribe, identity } from 'svelte/internal'
 
 import { findSchemaPathForElement, withPathOf, runAll, isString, isHTMLFormElement } from './utils'
+
 import type {
   FormupContext,
   SvelteActionResult,
@@ -85,13 +86,13 @@ const toogleClasses = <T>(
 /* eslint-enable max-params */
 
 const updateDirty = (node: Element, classes: ValidityCSSClasses, dirty: boolean): boolean =>
-  toogleClasses(node, classes, dirty, 'dirty', 'pristine')
+  toogleClasses(node, classes, dirty, 'is-dirty', 'is-pristine')
 
 const updateValidating = (
   node: Element,
   classes: ValidityCSSClasses,
   validating: boolean,
-): boolean => toogleClass(node, classes, validating, 'validating')
+): boolean => toogleClass(node, classes, validating, 'is-validating')
 
 const setCustomValidity = (node: Element, error: Error | undefined): Error | undefined => {
   node.setAttribute('aria-invalid', String(Boolean(error)))
@@ -107,7 +108,7 @@ const updateStoreCustomValidity = (
 ): Error | undefined => setCustomValidity(node, store.get(path))
 
 const updateValidity = <T>(node: Element, classes: ValidityCSSClasses, state: T): T =>
-  toogleClasses(node, classes, state, 'invalid', 'valid')
+  toogleClasses(node, classes, state, 'is-invalid', 'is-valid')
 
 const updateCustomValidity = (
   node: Element,
@@ -181,10 +182,10 @@ export default function validity<Values, State>(
           updateValidating(node, context.classes, validating),
         ),
         subscribe(context.isSubmitting, (submitting: boolean) =>
-          toogleClass(node, context.classes, submitting, 'submitting'),
+          toogleClass(node, context.classes, submitting, 'is-submitting'),
         ),
         subscribe(context.isSubmitted, (submitted: boolean) =>
-          toogleClass(node, context.classes, submitted, 'submitted'),
+          toogleClass(node, context.classes, submitted, 'is-submitted'),
         ),
 
         // To update the custom validitiy we need the first error message

@@ -157,45 +157,45 @@ export interface FormupSchema<Values = Record<string, unknown>, State = Record<s
 export interface ValidityCSSClasses {
   /**
    * Set on the element if it or all its children is valid.
-   * @defaultvalue `"valid"`
+   * @defaultvalue `"is-valid"`
    */
-  readonly valid?: string
+  readonly ['is-valid']?: string
 
   /**
    * Set on the element if it or any of its children is invalid.
-   * @defaultvalue `"invalid"`
+   * @defaultvalue `"is-invalid"`
    */
-  readonly invalid?: string
+  readonly ['is-invalid']?: string
 
   /**
    * Set on the element if it or all its children is pristine.
-   * @defaultvalue `"pristine"`
+   * @defaultvalue `"is-pristine"`
    */
-  readonly pristine?: string
+  readonly ['is-pristine']?: string
 
   /**
    * Set on the element if it or any of its children is dirty.
-   * @defaultvalue `"dirty"`
+   * @defaultvalue `"is-dirty"`
    */
-  readonly dirty?: string
+  readonly ['is-dirty']?: string
 
   /**
    * Set on the element if it or any of its children is validating.
-   * @defaultvalue `"validating"`
+   * @defaultvalue `"is-validating"`
    */
-  readonly validating?: string
+  readonly ['is-validating']?: string
 
   /**
    * Set on the form if it is submitting.
-   * @defaultvalue `"submitting"`
+   * @defaultvalue `"is-submitting"`
    */
-  readonly submitting?: string
+  readonly ['is-submitting']?: string
 
   /**
    * Set on the form if it is has been submitted.
-   * @defaultvalue `"submitted"`
+   * @defaultvalue `"is-submitted"`
    */
-  readonly submitted?: string
+  readonly ['is-submitted']?: string
 }
 
 /**
