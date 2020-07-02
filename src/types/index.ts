@@ -154,7 +154,8 @@ export interface FormupSchema<Values = Record<string, unknown>, State = Record<s
 /**
  * CSS class name mapping used {@link FormupContext.validity}.
  *
- * These can be overriden using {@link FormupOptions.classes} when invoking {@link formup}.
+ * These can be overriden using {@link FormupOptions.classes} when invoking {@link formup}
+ * or {@link FormupContext.validity}.
  */
 export interface ValidityCSSClasses {
   /**
@@ -452,7 +453,7 @@ export interface FormupContext<Values = Record<string, unknown>, State = Record<
   readonly debounce: number
 
   /**
-   * Allow to override the used CSS classes.
+   * The used CSS class overrides.
    */
   readonly classes: ValidityCSSClasses
 }
@@ -557,6 +558,11 @@ export interface ValiditiyActionOptions {
    * If no field has been found it updates the validity for itself and all its children.
    */
   at?: string
+
+  /**
+   * Allow to override the used CSS classes.
+   */
+  classes?: Partial<ValidityCSSClasses>
 }
 
 /**

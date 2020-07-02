@@ -164,34 +164,34 @@ export default function validity<Values, State>(
 
     const { at: path = findSchemaPathForElement(node) } = options
 
+    const classes = { ...context.classes, ...options.classes }
+
     if (path) {
       // Update classes on this node based on this node validity
       dispose = [
-        subscribeTo(node, context.classes, context.errors, updateStoreValidity),
-        subscribeTo(node, context.classes, context.dirty, updateStoreDirty),
-        subscribeTo(node, context.classes, context.validating, updateStoreValidating),
+        subscribeTo(node, classes, context.errors, updateStoreValidity),
+        subscribeTo(node, classes, context.dirty, updateStoreDirty),
+        subscribeTo(node, classes, context.validating, updateStoreValidating),
       ]
     } else if (isHTMLFormElement(node)) {
       // Update classes on the form based on validity of the whole form
       dispose = [
-        subscribe(context.isInvalid, (invalid: boolean) =>
-          updateValidity(node, context.classes, invalid),
-        ),
-        subscribe(context.isDirty, (dirty: boolean) => updateDirty(node, context.classes, dirty)),
+        subscribe(context.isInvalid, (invalid: boolean) => updateValidity(node, classes, invalid)),
+        subscribe(context.isDirty, (dirty: boolean) => updateDirty(node, classes, dirty)),
         subscribe(context.isValidating, (validating: boolean) =>
-          updateValidating(node, context.classes, validating),
+          updateValidating(node, classes, validating),
         ),
         subscribe(context.isSubmitting, (submitting: boolean) =>
-          toogleClass(node, context.classes, submitting, 'is-submitting'),
+          toogleClass(node, classes, submitting, 'is-submitting'),
         ),
         subscribe(context.isSubmitted, (submitted: boolean) =>
-          toogleClass(node, context.classes, submitted, 'is-submitted'),
+          toogleClass(node, classes, submitted, 'is-submitted'),
         ),
 
         // To update the custom validitiy we need the first error message
         subscribeToElements(
           node,
-          context.classes,
+          classes,
           context.errors,
           updateStoreCustomValidity,
           withFirstError,
@@ -200,23 +200,11 @@ export default function validity<Values, State>(
     } else {
       // Update classes on this node based on the validity of its contained elements
       dispose = [
+        subscribeToElements(node, classes, context.errors, updateStoreValidity, withFirstError),
+        subscribeToElements(node, classes, context.dirty, updateStoreDirty, withSome(updateDirty)),
         subscribeToElements(
           node,
-          context.classes,
-          context.errors,
-          updateStoreValidity,
-          withFirstError,
-        ),
-        subscribeToElements(
-          node,
-          context.classes,
-          context.dirty,
-          updateStoreDirty,
-          withSome(updateDirty),
-        ),
-        subscribeToElements(
-          node,
-          context.classes,
+          classes,
           context.validating,
           updateStoreValidating,
           withSome(updateValidating),
