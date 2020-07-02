@@ -2,6 +2,14 @@
 
 # Changelog
 
+### [0.3.1](https://www.github.com/kenoxa/svelte-formup/compare/v0.3.0...v0.3.1) (2020-07-02)
+
+
+### Bug Fixes
+
+* **prettier:** ignore changelog and toc ([2d3ed04](https://www.github.com/kenoxa/svelte-formup/commit/2d3ed04e56d266fe560c836c08640cadc4f086bd))
+* update docs on created release ([09e0e32](https://www.github.com/kenoxa/svelte-formup/commit/09e0e3244d7b4f219c6c75fd53a69367201d7d2b))
+
 ## [0.3.0](https://www.github.com/kenoxa/svelte-formup/compare/v0.2.1...v0.3.0) (2020-07-02)
 
 ### Features
