@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>svelte-formup - v0.2.1</title>
+	<title>svelte-formup - v0.3.3</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">svelte-formup - v0.2.1</a>
+					<a href="index.html" class="title">svelte-formup - v0.3.3</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -49,7 +49,7 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 			</ul>
-			<h1>svelte-formup - v0.2.1</h1>
+			<h1>svelte-formup - v0.3.3</h1>
 		</div>
 	</div>
 </header>
@@ -89,7 +89,8 @@
 				</a>
 				<p><a href="https://svelte.dev/">svelte</a>s <a href="https://svelte.dev/docs#use_action">action feature</a> is a unique way to attach custom logic to DOM elements. Combined with its great way of <a href="https://svelte.dev/docs#bind_element_property">two-way binding</a> and its <a href="https://svelte.dev/docs#svelte_store">reactive stores</a> this allows to write very native looking forms with no boilerplate.</p>
 				<p>Adding <a href="https://www.npmjs.com/package/yup">yup</a> allows to define a schema for value parsing and validation. Yup schema are extremely expressive and allow modeling complex, interdependent validations, or value transformations.</p>
-				<p>Styling forms in a consistent way has always been a problem. Everyone has her own opinion about it. <code>svelte-formup</code> allows flexibel error reporting supporting both <a href="https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation">native</a> and programmatic usage. Invalid form elements <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement/setCustomValidity">are marked</a> supporting several validity state specific css selectors like <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:invalid">:invalid</a>. Additionally <code>svelte-formup</code> adds CSS classes (<code>invalid</code>, <code>valid</code>, <code>dirty</code>, <code>pristine</code>, <code>validating</code>, <code>submitting</code> and <code>submitted</code>) for further custom styling. These classes maybe added to surrounding fieldsets or form group element depending on the validity state of the contained form elements.</p>
+				<p>Styling forms in a consistent way has always been a problem. Everyone has her own opinion about it. <code>svelte-formup</code> allows flexibel error reporting supporting both <a href="https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation">native</a> and programmatic usage. Invalid form elements <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement/setCustomValidity">are marked</a> supporting several validity state specific css selectors like <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:invalid">:invalid</a>. Additionally <code>svelte-formup</code> adds CSS classes (<code>is-invalid</code>, <code>is-valid</code>, <code>is-dirty</code>, <code>is-pristine</code>, <code>is-validating</code>, <code>is-submitting</code> and <code>is-submitted</code>) for further custom styling. These classes maybe added to surrounding fieldsets or form group element depending on the validity state of the contained form elements.</p>
+				<!-- prettier-ignore-start -->
 				<!-- START doctoc generated TOC please keep comment here to allow auto update -->
 				<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 				<ul>
@@ -105,6 +106,7 @@
 					<li><a href="#license">License</a></li>
 				</ul>
 				<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+				<!-- prettier-ignore-end -->
 				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
 					<h2>Installation</h2>
 				</a>
@@ -121,7 +123,10 @@
 				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
 					<h2>Usage</h2>
 				</a>
-				<p>Using built-in HTML form elements (<a href="https://svelte.dev/repl/7eeaaf18965a4ec7a84b62d3a3387587?version=3.23.2">Open in REPL</a>):</p>
+				<a href="#native-html-form-elements" id="native-html-form-elements" style="color: inherit; text-decoration: none;">
+					<h3>Native HTML form elements</h3>
+				</a>
+				<p><a href="https://codesandbox.io/s/laughing-hopper-7il5k?fontsize=14&amp;hidenavigation=1&amp;module=%2FApp.svelte&amp;theme=dark"><img src="https://codesandbox.io/static/img/play-codesandbox.svg" alt="Edit laughing-hopper-7il5k"></a></p>
 				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
   <span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> yup <span class="hljs-keyword">from</span> <span class="hljs-string">'yup'</span>
 
@@ -148,25 +153,16 @@
       <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span>Mrs.<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span>Mx.<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span>
-    {#if $dirty.has('title') &amp;&amp; $errors.has('title')}
-    <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>{$errors.get('title').message}<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
-    {/if}
   <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
 
   <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">use:validity</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"name"</span>&gt;</span>name<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"name"</span> <span class="hljs-attr">bind:value</span>=<span class="hljs-string">"{$values.name}"</span> /&gt;</span>
-    {#if $dirty.has('name') &amp;&amp; $errors.has('name')}
-    <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>{$errors.get('name').message}<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
-    {/if}
+    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"name"</span> <span class="hljs-attr">bind:value</span>=<span class="hljs-string">"{$values.name}"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> /&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
 
   <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">use:validity</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"email"</span>&gt;</span>email<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"email"</span> <span class="hljs-attr">bind:value</span>=<span class="hljs-string">"{$values.email}"</span> /&gt;</span>
-    {#if $dirty.has('email') &amp;&amp; $errors.has('email')}
-    <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>{$errors.get('email').message}<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
-    {/if}
+    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"email"</span> <span class="hljs-attr">bind:value</span>=<span class="hljs-string">"{$values.email}"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"email"</span> /&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
 
   <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>
@@ -174,10 +170,11 @@
     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"reset"</span>&gt;</span>reset<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></code></pre>
-				<a href="#displaying-error-message" id="displaying-error-message" style="color: inherit; text-decoration: none;">
-					<h3>Displaying Error Message</h3>
+				<a href="#error-messages" id="error-messages" style="color: inherit; text-decoration: none;">
+					<h3>Error Messages</h3>
 				</a>
-				<p><code>svelte-formup</code> does not provide any svelte components. Most projects have their own way of reporting errors. Below is an example component to simplify error handling:</p>
+				<p><a href="https://codesandbox.io/s/naughty-buck-t5yx4?fontsize=14&amp;hidenavigation=1&amp;module=%2FApp.svelte&amp;theme=dark"><img src="https://codesandbox.io/static/img/play-codesandbox.svg" alt="Edit naughty-buck-t5yx4"></a></p>
+				<p><code>svelte-formup</code> does not provide any svelte components. Most projects have their own way of reporting errors. Below is an example component to simplify error handling.</p>
 				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
   <span class="hljs-keyword">import</span> { getFormupContext } <span class="hljs-keyword">from</span> <span class="hljs-string">'svelte-formup'</span>
 
@@ -195,39 +192,15 @@
   <span class="hljs-tag">&lt;<span class="hljs-name">slot</span> {<span class="hljs-attr">error</span>}&gt;</span>{error.message}<span class="hljs-tag">&lt;/<span class="hljs-name">slot</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
 {/if}</code></pre>
-				<p>This could be used like (omitting identical code for brevity) (<a href="https://svelte.dev/repl/333dbbf625ba4694b1d07a1bfa7c0b21?version=3.23.2">Open in REPL</a>):</p>
+				<p>This could be used like (omitting identical code for brevity)</p>
 				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
   <span class="hljs-keyword">import</span> IfError <span class="hljs-keyword">from</span> <span class="hljs-string">'./if-error.svelte'</span>
 </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 
 <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">use:validate</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">use:validity</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"title"</span>&gt;</span>title<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"title"</span> <span class="hljs-attr">bind:value</span>=<span class="hljs-string">"{$values.title}"</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span>Mr.<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span>Mrs.<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span>Mx.<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">IfError</span> <span class="hljs-attr">at</span>=<span class="hljs-string">"title"</span> /&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
-
-  <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">use:validity</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"name"</span>&gt;</span>name<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"name"</span> <span class="hljs-attr">bind:value</span>=<span class="hljs-string">"{$values.name}"</span> /&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">IfError</span> <span class="hljs-attr">at</span>=<span class="hljs-string">"name"</span> /&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
-
-  <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">use:validity</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"email"</span>&gt;</span>email<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"email"</span> <span class="hljs-attr">bind:value</span>=<span class="hljs-string">"{$values.email}"</span> /&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">IfError</span> <span class="hljs-attr">at</span>=<span class="hljs-string">"email"</span> /&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
-
-  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"submit"</span>&gt;</span>Submit<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"reset"</span>&gt;</span>reset<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"name"</span>&gt;</span>name<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"name"</span> <span class="hljs-attr">bind:value</span>=<span class="hljs-string">"{$values.name}"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"email"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">IfError</span> <span class="hljs-attr">at</span>=<span class="hljs-string">"name"</span> /&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></code></pre>
 				<a href="#api" id="api" style="color: inherit; text-decoration: none;">
 					<h2>API</h2>
@@ -266,6 +239,7 @@
 					<li><input disabled="" type="checkbox"> provides IfError, Input, Select, Choice components using yup schema values to reduce boilerplate via &#39;svelte-formup-components&#39;</li>
 					<li><input disabled="" type="checkbox"> svelte-society/recipes-mvp recipy: <a href="https://github.com/svelte-society/recipes-mvp/pull/47/files">form validation with yup</a></li>
 					<li><input disabled="" type="checkbox"> examples like <a href="https://joepuzzo.github.io/informed">informed</a></li>
+					<li><input disabled="" type="checkbox"> style guide: <code>form &gt; :global(.valid.dirty)</code></li>
 				</ul>
 				<a href="#related-projects" id="related-projects" style="color: inherit; text-decoration: none;">
 					<h2>Related Projects</h2>
