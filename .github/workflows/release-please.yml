@@ -57,3 +57,18 @@ jobs:
         run: npm start release
         env:
           NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
+
+      - name: Generate website
+        if: ${{ steps.release.outputs.release_created }}
+        run: npm run typedoc
+
+      - name: Deploy website
+        if: ${{ steps.release.outputs.release_created }}
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BASE_BRANCH: main
+          BRANCH: gh-pages
+          FOLDER: docs
+          CLEAN: true
+          CLEAN_EXCLUDE: '["CNAME", ".nojekyll"]'
