@@ -1,3 +1,8 @@
+/**
+ * This export is required for snowpack to include this file in the output.
+ */
+export default undefined
+
 /** Callback to inform of a value updates. */
 export type Subscriber<T> = (value: T) => void
 
