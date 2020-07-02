@@ -8,7 +8,7 @@ import validateAction from './internal/validate'
 import validityAction from './internal/validity'
 import isNode from './internal/is-node'
 
-import {
+import type {
   EventName,
   FormupSchema,
   FormupContext,
@@ -87,7 +87,7 @@ export interface FormupOptions<Values = Record<string, unknown>, State = Record<
    *
    * @defaultvalue `() => Object.create(null)`
    */
-  getInitialValues?: () => NonNullable<Values>
+  getInitialValues?: () => Partial<NonNullable<Values>>
 
   /**
    * Use this option to run validations each time after {@link FormupOptions.getInitialValues} has been called.

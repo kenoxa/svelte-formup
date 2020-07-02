@@ -9,7 +9,7 @@
 
   const { values, validate, validity } = formup({
     schema: yup.object().shape({
-      title: yup.string().oneOf(['Mr.', 'Mrs.', 'Mx.']).required(),
+      title: yup.string().oneOf(['Mr.', 'Mrs.', 'Mx.']).notRequired(),
       name: yup.string().required(),
       email: yup
         .string()
@@ -35,7 +35,6 @@
   <p use:validity>
     <label for="title">title</label>
     <select id="title" bind:value={$values.title}>
-      <option />
       <option>Mr.</option>
       <option>Mrs.</option>
       <option>Mx.</option>
