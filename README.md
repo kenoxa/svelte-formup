@@ -169,8 +169,8 @@ This could be used like (omitting identical code for brevity)
 
 `svelte-formup` exports two functions:
 
-- [formup(options)](https://svelte-form.js.org/globals.html#formup) is the main entrypoint which creates the [form context](https://svelte-form.js.org/interfaces/_svelte_formup_.formupcontext.html)
-- [getFormupContext()](https://svelte-form.js.org/globals.html#getformcontext) allows to access the [form context](https://svelte-form.js.org/interfaces/_svelte_formup_.formupcontext.html) through the [svelte context](https://svelte.dev/docs#getContext)
+- [formup(options)](https://svelte-formup.js.org/globals.html#formup) is the main entrypoint which creates the [form context](https://svelte-formup.js.org/interfaces/_svelte_formup_.formupcontext.html)
+- [getFormupContext()](https://svelte-formup.js.org/globals.html#getformcontext) allows to access the [form context](https://svelte-formup.js.org/interfaces/_svelte_formup_.formupcontext.html) through the [svelte context](https://svelte.dev/docs#getContext)
 
 ## Polyfills
 
