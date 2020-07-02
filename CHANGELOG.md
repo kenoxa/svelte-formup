@@ -2,6 +2,13 @@
 
 # Changelog
 
+## [0.4.0](https://www.github.com/kenoxa/svelte-formup/compare/v0.3.3...v0.4.0) (2020-07-02)
+
+
+### Features
+
+* **validity:** allow to override css classes per `use:validity` ([c0f7dd5](https://www.github.com/kenoxa/svelte-formup/commit/c0f7dd5b89eb5506aeaeecf24e80307037aff5cb))
+
 ### [0.3.3](https://www.github.com/kenoxa/svelte-formup/compare/v0.3.2...v0.3.3) (2020-07-02)
 
 
