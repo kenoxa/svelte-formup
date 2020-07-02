@@ -2,9 +2,8 @@ name: docs
 
 on:
   push:
-    tags: ['v*.*.*']
-  release:
-    types: [created]
+    tags:
+      - 'v*.*.*'
 
 jobs:
   gh-pages:

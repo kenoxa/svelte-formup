@@ -14,7 +14,7 @@
 
 ### Features
 
-- github pages ([44ad5a0](https://www.github.com/kenoxa/svelte-formup/commit/44ad5a0fa3fb7fb206c82024fbde5676ea4f17a0))
+* github pages ([44ad5a0](https://www.github.com/kenoxa/svelte-formup/commit/44ad5a0fa3fb7fb206c82024fbde5676ea4f17a0))
 
 ### Bug Fixes
 
@@ -25,3 +25,5 @@
 - **gh-pages:** only publish on release or version tag ([ddda4e0](https://www.github.com/kenoxa/svelte-formup/commit/ddda4e029cb5ab9271fdf2406fdd89d828ad81e4))
 - **gh-pages:** simplify CNAME generation ([0b6c485](https://www.github.com/kenoxa/svelte-formup/commit/0b6c4852d64f2f94048dcdfb78a1561edefafa62))
 - typedoc comments ([ceabdc0](https://www.github.com/kenoxa/svelte-formup/commit/ceabdc00f9e81c251bef19a10ee5ebaf0735ec94))
+
+<!-- prettier-ignore-end -->
