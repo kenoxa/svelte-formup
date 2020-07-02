@@ -2,6 +2,13 @@
 
 # Changelog
 
+### [0.4.1](https://www.github.com/kenoxa/svelte-formup/compare/v0.4.0...v0.4.1) (2020-07-02)
+
+
+### Bug Fixes
+
+* doc api links ([33685d1](https://www.github.com/kenoxa/svelte-formup/commit/33685d14313c2fc945185da1097b29144376aac2))
+
 ## [0.4.0](https://www.github.com/kenoxa/svelte-formup/compare/v0.3.3...v0.4.0) (2020-07-02)
 
 
