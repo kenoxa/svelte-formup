@@ -258,16 +258,16 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
     reset(): void {
       if (get(isSubmitting)) return
 
-      isSubmitted.set(false)
+      values.set(getInitialValues())
 
       abortActiveValidateAt()
 
       dirty.set(new Set())
       errors.set(new Map())
 
+      isSubmitted.set(false)
       submitCount.set(0)
 
-      values.set(getInitialValues())
       if (validateInitialValues) void validate()
 
       onReset(context)
