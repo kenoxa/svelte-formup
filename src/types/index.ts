@@ -1,7 +1,7 @@
 /**
  * This export is required for snowpack to include this file in the output.
  */
-export default undefined
+export default void 0 // eslint-disable-line no-void
 
 /** Callback to inform of a value updates. */
 export type Subscriber<T> = (value: T) => void
@@ -122,6 +122,11 @@ export interface ValidateContext<
    * To be notified if the validation is longer needed.
    */
   signal: AbortSignal
+
+  /**
+   * The event that caused the validation.
+   */
+  event?: Event
 }
 
 /**
@@ -342,7 +347,7 @@ export interface FormupContext<Values = Record<string, unknown>, State = Record<
    * @remarks
    * Repeated invocation while there is an active submit have no effect (eg are ignored).
    */
-  readonly submit: () => Promise<void>
+  readonly submit: (event?: Event) => Promise<void>
 
   /**
    * Function that will reset the form to its initial state.
@@ -351,7 +356,7 @@ export interface FormupContext<Values = Record<string, unknown>, State = Record<
    *
    * This may have no effect (eg is ignored) if there is an active submit.
    */
-  readonly reset: () => void
+  readonly reset: (event?: Event) => void
 
   /**
    * Set the form error manually.
