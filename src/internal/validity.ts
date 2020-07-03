@@ -1,4 +1,5 @@
-import { subscribe, identity } from 'svelte/internal'
+// eslint-disable-next-line camelcase
+import { subscribe, identity, toggle_class, query_selector_all } from 'svelte/internal'
 
 import { findSchemaPathForElement, withPathOf, runAll, isString, isHTMLFormElement } from './utils'
 
@@ -45,30 +46,30 @@ const subscribeToElements = <T extends Store>(
   toggle: Toogle<T>,
   combine: (node: Element, classes: ValidityCSSClasses, results: Result<T>[]) => void,
 ): Unsubscriber =>
-  subscribe(store, (map: T) => {
-    const results: Result<T>[] = []
+  subscribe(store, (map: T) =>
+    combine(
+      node,
+      classes,
 
-    // Not using form.elements:
-    // - 'elements' may be a schema field;
-    //    in which case form.elements point to that associated element and not the collections
-    // - `[contenteditable]` fields are not included in fields
-    node
-      .querySelectorAll('input,select,textarea,[contenteditable],output,object,button')
-      .forEach((element) => {
-        results.push(updateToggle(element, classes, map, toggle))
-      })
-
-    combine(node, classes, results)
-  }) as Unsubscriber
+      // Not using form.elements:
+      // - 'elements' may be a schema field;
+      //    in which case form.elements point to that associated element and not the collections
+      // - `[contenteditable]` fields are not included in fields
+      query_selector_all(
+        'input,select,textarea,[contenteditable],output,object,button',
+        node as HTMLElement,
+      ).map((element) => updateToggle(element, classes, map, toggle)),
+    ),
+  ) as Unsubscriber
 /* eslint-enable max-params */
 
 const toogleClass = <T>(
-  { classList }: Element,
+  element: Element,
   classes: ValidityCSSClasses,
   state: T,
   key: keyof ValidityCSSClasses,
 ): T => {
-  classList[state ? 'add' : 'remove'](classes[key] || key)
+  toggle_class(element, classes[key] || key, state)
   return state
 }
 
