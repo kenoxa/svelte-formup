@@ -75,19 +75,23 @@ export interface FormupOptions<Values = Record<string, unknown>, State = Record<
    *
    * @throws An thrown error is passed to {@link FormupContext.setError}.
    */
-  onSubmit?: (values: Values, context: FormupContext<Values, State>) => void | Promise<void>
+  onSubmit?: (
+    values: Values,
+    context: FormupContext<Values, State>,
+    event?: Event,
+  ) => void | Promise<void>
 
   /**
    * A function that gets called when form is resetted.
    */
-  onReset?: (context: FormupContext<Values, State>) => void
+  onReset?: (context: FormupContext<Values, State>, event?: Event) => void
 
   /**
    * A function called to initialize the form values on creation and reset. The default returns an empty object.
    *
    * @defaultvalue `() => Object.create(null)`
    */
-  getInitialValues?: () => Partial<NonNullable<Values>>
+  getInitialValues?: (event?: Event) => Partial<NonNullable<Values>>
 
   /**
    * Use this option to run validations each time after {@link FormupOptions.getInitialValues} has been called.
@@ -226,7 +230,7 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
     isDirty: derived(isPristine, negate),
 
     // Form methods
-    async submit(): Promise<void> {
+    async submit(event?: Event): Promise<void> {
       if (get(isSubmitting)) return
 
       isSubmitted.set(false)
@@ -239,7 +243,7 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
         const data = await validate()
 
         if (data) {
-          const result = await onSubmit(data, context)
+          const result = await onSubmit(data, context, event)
 
           // After successful submit reset the count
           submitCount.set(0)
@@ -255,10 +259,10 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
       }
     },
 
-    reset(): void {
+    reset(event?: Event): void {
       if (get(isSubmitting)) return
 
-      values.set(getInitialValues())
+      values.set(getInitialValues(event))
 
       abortActiveValidateAt()
 
@@ -268,9 +272,9 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
       isSubmitted.set(false)
       submitCount.set(0)
 
-      if (validateInitialValues) void validate()
+      if (validateInitialValues) void validate(event)
 
-      onReset(context)
+      onReset(context, event)
     },
 
     setError,
@@ -306,9 +310,13 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
   const validateAtStates = new Map<string, ValidateState>()
 
   let validateAbortController: AbortController
-  const createValidateContext = (controller: AbortController): ValidateContext<Values, State> => ({
+  const createValidateContext = (
+    controller: AbortController,
+    event?: Event,
+  ): ValidateContext<Values, State> => ({
     formup: context,
     signal: controller.signal,
+    event,
   })
 
   // Start initial validation
@@ -316,7 +324,7 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
 
   return context
 
-  async function validate(): Promise<Values | void> {
+  async function validate(event?: Event): Promise<Values | void> {
     validateAbortController?.abort()
     validateAbortController = new AbortController()
     const currentController = validateAbortController
@@ -327,7 +335,7 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
       const data = await schema.validate(currentValues, {
         abortEarly: false,
         strict: false,
-        context: createValidateContext(validateAbortController),
+        context: createValidateContext(validateAbortController, event),
       })
 
       // Ensure we are still the active validation
