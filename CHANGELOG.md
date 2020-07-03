@@ -2,6 +2,18 @@
 
 # Changelog
 
+## [0.5.0](https://www.github.com/kenoxa/svelte-formup/compare/v0.4.1...v0.5.0) (2020-07-03)
+
+
+### Features
+
+* pass source event through ([98669b0](https://www.github.com/kenoxa/svelte-formup/commit/98669b0e708b679e855ec568ee3a946fae3c3f7f))
+
+
+### Bug Fixes
+
+* reset order ([4d3909a](https://www.github.com/kenoxa/svelte-formup/commit/4d3909abb51adda12c448c27db869e1a4ed913ab))
+
 ### [0.4.1](https://www.github.com/kenoxa/svelte-formup/compare/v0.4.0...v0.4.1) (2020-07-02)
 
 
