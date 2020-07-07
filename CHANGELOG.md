@@ -2,6 +2,15 @@
 
 # Changelog
 
+### [0.5.1](https://www.github.com/kenoxa/svelte-formup/compare/v0.5.0...v0.5.1) (2020-07-07)
+
+
+### Bug Fixes
+
+* enhanced onSubmit event typing to include `submitter` property ([f0dd684](https://www.github.com/kenoxa/svelte-formup/commit/f0dd684abca537432c2ea84f61dbc66e38e6780f))
+* node compatible build ([d2b04be](https://www.github.com/kenoxa/svelte-formup/commit/d2b04be8577e4ca4065c0c2252ecd59a0fe892a1))
+* re-use some svelte utility classes ([288ddd2](https://www.github.com/kenoxa/svelte-formup/commit/288ddd22342d5225ee4b0e12fbce2b950bad94af))
+
 ## [0.5.0](https://www.github.com/kenoxa/svelte-formup/compare/v0.4.1...v0.5.0) (2020-07-03)
 
 
