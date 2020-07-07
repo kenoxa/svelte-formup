@@ -78,7 +78,7 @@ export interface FormupOptions<Values = Record<string, unknown>, State = Record<
   onSubmit?: (
     values: Values,
     context: FormupContext<Values, State>,
-    event?: Event,
+    event?: Event & { submitter?: HTMLButtonElement | HTMLInputElement },
   ) => void | Promise<void>
 
   /**
