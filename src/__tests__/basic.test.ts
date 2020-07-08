@@ -16,14 +16,14 @@ test('async validation', async () => {
 
   const email = screen.getByRole('textbox', { name: /email/i })
 
-  expect(email).toHaveClass('is-valid', 'is-pristine')
-  expect(email).not.toHaveClass('is-invalid', 'is-dirty', 'is-validating')
+  expect(email).toHaveClass('is-pristine')
+  expect(email).not.toHaveClass('is-dirty', 'is-error', 'is-validating')
 
   await userEvent.type(email, 'in@use.com')
 
-  await waitFor(() => expect(email).toHaveClass('is-valid', 'is-dirty', 'is-validating'))
+  await waitFor(() => expect(email).toHaveClass('is-dirty', 'is-validating'))
 
-  await waitFor(() => expect(email).toHaveClass('is-invalid', 'is-dirty'))
+  await waitFor(() => expect(email).toHaveClass('is-error', 'is-dirty'))
 
-  expect(email).not.toHaveClass('is-valid', 'is-pristine', 'is-validating')
+  expect(email).not.toHaveClass('is-success', 'is-pristine', 'is-validating')
 })

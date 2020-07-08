@@ -59,15 +59,12 @@ export default function validate<Values, State>(
       dirtyOn = options.on || options.validateOn || context.dirtyOn,
     } = options
 
-    // Activate css classes; managed by validity action
-    dispose = [context.validity(node, options).destroy]
-
     const validateAt = (path: string): void => context.validateAt(path, { debounce })
     const dirtyAt = (path: string): void => context.setDirtyAt(path)
 
     if (path) {
       // Update classes on this node based on this node validity
-      dispose.push(
+      dispose = asArray(path).flatMap((path) => [
         ...listenOn(
           node,
           validateOn,
@@ -78,7 +75,7 @@ export default function validate<Values, State>(
           dirtyOn,
           dedupeEvents(DIRTY_EVENTS, () => dirtyAt(path)),
         ),
-      )
+      ])
     } else {
       if (isHTMLFormElement(node)) {
         // Setting the novalidate attribute on the form is what stops the form from showing its own error message bubbles,
@@ -88,17 +85,20 @@ export default function validate<Values, State>(
         // Ensure the aria role is set
         if (!node.role) node.role = 'form'
 
-        dispose.push(
+        dispose = [
           listen(node, 'submit', prevent_default(context.submit)),
           listen(node, 'reset', prevent_default(context.reset)),
-        )
+        ]
       }
 
-      dispose.push(
+      dispose = [
         ...listenOn(node, validateOn, dedupeEvents(VALIDATE_EVENTS, listenWith(validateAt))),
         ...listenOn(node, dirtyOn, dedupeEvents(DIRTY_EVENTS, listenWith(dirtyAt))),
-      )
+      ]
     }
+
+    // Activate css classes; managed by validity action
+    dispose.push(context.validity(node, options).destroy)
   }
 
   update(options)

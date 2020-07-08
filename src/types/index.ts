@@ -161,38 +161,20 @@ export interface FormupSchema<Values = Record<string, unknown>, State = Record<s
  *
  * These can be overriden using {@link FormupOptions.classes} when invoking {@link formup}
  * or {@link FormupContext.validity}.
+ *
+ * - on form: `.is-{dirty,pristine,error,validating,submitting,submitted}`
+ * - on form elements (controls & fieldsets):
+ *   - `.is-{dirty,pristine,error,success,validating}`
+ *   - `:valid` & `:invalid`
+ * - other elements: `has-{dirty,pristine,error,success,validating}`
+ *
+ * - dirty: field or one child dirty - `$dirty.has(field)`
+ * - pristine: field or all childs pristine - `!$dirty.has(field)`
+ * - error: field or one child - `$dirty.has(field) && !$validating.has(field) && $errors.has(field)`
+ * - success: field or all child - `$dirty.has(field) && !$validating.has(field) && !\$errors.has(field)`
+ * - validating: `$validating.has(field)`
  */
 export interface ValidityCSSClasses {
-  /**
-   * Set on the element if it or all its children is valid.
-   * @defaultvalue `"is-valid"`
-   */
-  readonly ['is-valid']?: string
-
-  /**
-   * Set on the element if it or any of its children is invalid.
-   * @defaultvalue `"is-invalid"`
-   */
-  readonly ['is-invalid']?: string
-
-  /**
-   * Set on the element if it or all its children is pristine.
-   * @defaultvalue `"is-pristine"`
-   */
-  readonly ['is-pristine']?: string
-
-  /**
-   * Set on the element if it or any of its children is dirty.
-   * @defaultvalue `"is-dirty"`
-   */
-  readonly ['is-dirty']?: string
-
-  /**
-   * Set on the element if it or any of its children is validating.
-   * @defaultvalue `"is-validating"`
-   */
-  readonly ['is-validating']?: string
-
   /**
    * Set on the form if it is submitting.
    * @defaultvalue `"is-submitting"`
@@ -204,6 +186,66 @@ export interface ValidityCSSClasses {
    * @defaultvalue `"is-submitted"`
    */
   readonly ['is-submitted']?: string
+
+  /**
+   * Set on the element if it or any of its children is dirty.
+   * @defaultvalue `"is-dirty"`
+   */
+  readonly ['is-dirty']?: string
+
+  /**
+   * Set on the element if it or all its children is pristine.
+   * @defaultvalue `"is-pristine"`
+   */
+  readonly ['is-pristine']?: string
+
+  /**
+   * Set on the element if it or any of its children: `$dirty.has(field) && !$validating.has(field) && $errors.has(field)`
+   * @defaultvalue `"is-error"`
+   */
+  readonly ['is-error']?: string
+
+  /**
+   * Set on the element if it or all of its children: `$dirty.has(field) && !$validating.has(field) && !$errors.has(field)`
+   * @defaultvalue `"is-success"`
+   */
+  readonly ['is-success']?: string
+
+  /**
+   * Set on the element if it or any of its children is validating.
+   * @defaultvalue `"is-validating"`
+   */
+  readonly ['is-validating']?: string
+
+  /**
+   * Set on non form element if it or any of its children is dirty.
+   * @defaultvalue `"has-dirty"`
+   */
+  readonly ['has-dirty']?: string
+
+  /**
+   * Set on non form element if it or all its children is pristine.
+   * @defaultvalue `"has-pristine"`
+   */
+  readonly ['has-pristine']?: string
+
+  /**
+   * Set on non form element if any of its children
+   * @defaultvalue `"has-error"`
+   */
+  readonly ['has-error']?: string
+
+  /**
+   * Set on non form element if all of its children
+   * @defaultvalue `"has-success"`
+   */
+  readonly ['has-success']?: string
+
+  /**
+   * Set on non form element if it or any of its children is validating.
+   * @defaultvalue `"has-validating"`
+   */
+  readonly ['has-validating']?: string
 }
 
 /**
@@ -234,7 +276,7 @@ export interface FormupContext<Values = Record<string, unknown>, State = Record<
   /**
    * Whole form error, not associated with any field
    */
-  readonly error: Readable<ValidationError | undefined>
+  readonly formError: Readable<ValidationError | undefined>
 
   /**
    * The form errors keyed by field path as a svelte store.
@@ -269,6 +311,20 @@ export interface FormupContext<Values = Record<string, unknown>, State = Record<
    */
   readonly validating: Readable<ReadonlySet<string>>
 
+  /**
+   * The valid, meaning dirty and not validating and no error, fields by path as a svelte store.
+   */
+  readonly success: Readable<ReadonlySet<string>>
+
+  /**
+   * The invalid, meaning dirty and not validating and error, fields by path as a svelte store.
+   *
+   * ```html
+   * {#if $invalid.has(email)} $invalid.get(email).message {/if}
+   * ```
+   */
+  readonly error: Readable<ReadonlyMap<string, ValidationError>>
+
   // These are whole form related stores
 
   /**
@@ -302,22 +358,6 @@ export interface FormupContext<Values = Record<string, unknown>, State = Record<
   readonly submitCount: Readable<number>
 
   /**
-   * Determines if the whole form is valid.
-   *
-   * When this becames `true` the {@link ValidityCSSClasses.valid} CSS class is added to the form.
-   */
-  readonly isValid: Readable<boolean>
-
-  /**
-   * Boolean that is true when form is invalid.
-   *
-   * A form is invalid when any of its inputs fails its validation function ( if there are errors ).
-   *
-   * When this becames `true` the {@link ValidityCSSClasses.invalid} CSS class is added to the form.
-   */
-  readonly isInvalid: Readable<boolean>
-
-  /**
    * Boolean that is true when form is pristine.
    *
    * A form is pristine when it has not been touched && no values have been entered in any field.
@@ -332,6 +372,13 @@ export interface FormupContext<Values = Record<string, unknown>, State = Record<
    * When this becames `true` the {@link ValidityCSSClasses.dirty} CSS class is added to the form.
    */
   readonly isDirty: Readable<boolean>
+
+  /**
+   * Determines if the whole form is valid.
+   *
+   * When this becames `true` the {@link ValidityCSSClasses.valid} CSS class is added to the form.
+   */
+  readonly isError: Readable<boolean>
 
   /**
    * This function will submit the form and trigger some lifecycle events.
@@ -364,7 +411,7 @@ export interface FormupContext<Values = Record<string, unknown>, State = Record<
    * If `error` is falsey means deleting the path from the store.
    * @param error - to set
    */
-  readonly setError: (error?: ValidationError | undefined | null | false) => void
+  readonly setFormError: (error?: ValidationError | undefined | null | false) => void
 
   /**
    * Set the error message of a field imperatively.
@@ -501,7 +548,7 @@ export interface ValidateActionOptions {
    *
    * If no field has been found it validates itself and all its children.
    */
-  at?: string
+  at?: string | string[]
 
   /**
    * Override which events should trigger a validation and mark a field as dirty.
@@ -562,7 +609,7 @@ export interface ValiditiyActionOptions {
    *
    * If no field has been found it updates the validity for itself and all its children.
    */
-  at?: string
+  at?: string | string[]
 
   /**
    * Allow to override the used CSS classes.

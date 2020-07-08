@@ -31,8 +31,7 @@ export const findSchemaPathForElement = (
 export const withPathOf = <T>(
   node: Element | EventTarget | null,
   callback: (path: string) => T,
+  path: undefined | null | false | string = findSchemaPathForElement(node),
 ): T | undefined => {
-  const path = findSchemaPathForElement(node)
-
   if (path) return callback(path)
 }

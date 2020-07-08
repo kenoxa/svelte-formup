@@ -73,7 +73,7 @@ export interface FormupOptions<Values = Record<string, unknown>, State = Record<
   /**
    * A function that gets called when form is submitted successfully. The function receives the values as a parameter.
    *
-   * @throws An thrown error is passed to {@link FormupContext.setError}.
+   * @throws An thrown error is passed to {@link FormupContext.setFormError}.
    */
   onSubmit?: (
     values: Values,
@@ -169,12 +169,41 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
   const dirty = writable(new Set<string>())
   const validating = writable(new Set<string>())
 
+  const success = derived([dirty, validating, errors], ([$dirty, $validating, $errors]) => {
+    const $success = new Set<string>()
+
+    for (const field of $dirty) {
+      if (!$errors.has(field) && !$validating.has(field)) {
+        $success.add(field)
+      }
+    }
+
+    return $success
+  })
+
+  const error = derived([dirty, validating, errors], ([$dirty, $validating, $errors]) => {
+    const $error = new Map<string, ValidationError>()
+
+    for (const [field, error] of $errors.entries()) {
+      if ($dirty.has(field) && !$validating.has(field)) {
+        $error.set(field, error)
+      }
+    }
+
+    return $error
+  })
+
   const isSubmitting = writable(false)
   const isValidating = writable(false)
   const isSubmitted = writable(false)
 
-  const isValid = derived(errors, isEmpty)
   const isPristine = derived(dirty, isEmpty)
+  const isDirty = derived(isPristine, negate)
+  const isError = derived(
+    [isDirty, isValidating, validating, errors],
+    ([$isDirty, $isValidating, $validating, $errors]) =>
+      $isDirty && !$isValidating && $validating.size === 0 && $errors.size > 0,
+  )
 
   const submitCount = writable(0)
 
@@ -189,7 +218,7 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
       return errors
     })
 
-  const setError: FormupContext['setError'] = (error) => setErrorAt('', error)
+  const setFormError: FormupContext['setFormError'] = (error) => setErrorAt('', error)
 
   const setDirtyAt: FormupContext['setDirtyAt'] = (path, isDirty = true) =>
     setAt(dirty, path, isDirty)
@@ -204,12 +233,14 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
     values,
     state: writable(state),
 
-    error: derived(errors, (errors) => errors.get('')),
+    formError: derived(errors, (errors) => errors.get('')),
 
     // These are objects keyed by path
     errors,
     dirty,
     validating,
+    error,
+    success,
 
     // These are whole form related stores
 
@@ -224,13 +255,12 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
     submitCount,
 
     // These are summaries over all fields
-    isValid,
-    isInvalid: derived(isValid, negate),
     isPristine,
-    isDirty: derived(isPristine, negate),
+    isDirty,
+    isError,
 
     // Form methods
-    async submit(event?: Event): Promise<void> {
+    async submit(event) {
       if (get(isSubmitting)) return
 
       isSubmitted.set(false)
@@ -253,13 +283,13 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
           return result
         }
       } catch (error) {
-        setError(error)
+        setFormError(error)
       } finally {
         isSubmitting.set(false)
       }
     },
 
-    reset(event?: Event): void {
+    reset(event) {
       if (get(isSubmitting)) return
 
       values.set(getInitialValues(event))
@@ -277,7 +307,7 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
       onReset(context, event)
     },
 
-    setError,
+    setFormError,
 
     // Methods to update specific paths
     setErrorAt,
@@ -360,7 +390,7 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
                 newErrors.set(error.path, error)
                 dirty.add(error.path)
               } else {
-                setError(error)
+                setFormError(error)
               }
             })
 

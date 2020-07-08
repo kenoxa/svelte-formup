@@ -1,7 +1,14 @@
 // eslint-disable-next-line camelcase
 import { subscribe, identity, toggle_class, query_selector_all } from 'svelte/internal'
 
-import { findSchemaPathForElement, withPathOf, runAll, isString, isHTMLFormElement } from './utils'
+import {
+  findSchemaPathForElement,
+  withPathOf,
+  runAll,
+  isString,
+  asArray,
+  isHTMLFormElement,
+} from './utils'
 
 import type {
   FormupContext,
@@ -23,22 +30,24 @@ type Toogle<T extends Store> = (
   path: string,
 ) => Result<T>
 
+/* eslint-disable max-params */
 const updateToggle = <T extends Store>(
   node: Element,
   classes: ValidityCSSClasses,
   store: T,
   toggle: Toogle<T>,
-): Result<T> => withPathOf(node, (path) => toggle(node, classes, store, path))
+  path?: string | undefined,
+): Result<T> | undefined => withPathOf(node, (path) => toggle(node, classes, store, path), path)
 
 const subscribeTo = <T extends Store>(
+  path: string,
   node: Element,
   classes: ValidityCSSClasses,
   store: Readable<T>,
   toggle: Toogle<T>,
 ): Unsubscriber =>
-  subscribe(store, (store: T) => updateToggle(node, classes, store, toggle)) as Unsubscriber
+  subscribe(store, (store: T) => updateToggle(node, classes, store, toggle, path)) as Unsubscriber
 
-/* eslint-disable max-params */
 const subscribeToElements = <T extends Store>(
   node: Element,
   classes: ValidityCSSClasses,
@@ -63,91 +72,102 @@ const subscribeToElements = <T extends Store>(
   ) as Unsubscriber
 /* eslint-enable max-params */
 
+const isFormField = (node: Element): boolean =>
+  isHTMLFormElement(node) || 'setCustomValidity' in node
+
 const toogleClass = <T>(
-  element: Element,
+  node: Element,
   classes: ValidityCSSClasses,
   state: T,
-  key: keyof ValidityCSSClasses,
+  key: 'dirty' | 'pristine' | 'error' | 'success' | 'validating' | 'submitting' | 'submitted',
 ): T => {
-  toggle_class(element, classes[key] || key, state)
+  const className = `${isFormField(node) ? 'is' : 'has'}-${key}` as keyof ValidityCSSClasses
+  toggle_class(node, classes[className] || className, state)
   return state
 }
 
-/* eslint-disable max-params */
-const toogleClasses = <T>(
-  node: Element,
-  classes: ValidityCSSClasses,
-  state: T,
-  on: keyof ValidityCSSClasses,
-  off: keyof ValidityCSSClasses,
-): T => {
-  toogleClass(node, classes, !state, off)
-  return toogleClass(node, classes, state, on)
-}
-/* eslint-enable max-params */
-
-const updateDirty = (node: Element, classes: ValidityCSSClasses, dirty: boolean): boolean =>
-  toogleClasses(node, classes, dirty, 'is-dirty', 'is-pristine')
-
-const updateValidating = (
-  node: Element,
-  classes: ValidityCSSClasses,
-  validating: boolean,
-): boolean => toogleClass(node, classes, validating, 'is-validating')
-
 const setCustomValidity = (node: Element, error: Error | undefined): Error | undefined => {
-  node.setAttribute('aria-invalid', String(Boolean(error)))
   ;(node as HTMLInputElement).setCustomValidity?.(error?.message || '')
   return error
 }
 
-const updateStoreCustomValidity = (
+const updateDirty = (
   node: Element,
   classes: ValidityCSSClasses,
-  store: ReadonlyMap<string, Error>,
-  path: string,
-): Error | undefined => setCustomValidity(node, store.get(path))
+  dirty: boolean | undefined,
+): boolean | undefined => {
+  toogleClass(node, classes, !dirty, 'pristine')
+  return toogleClass(node, classes, dirty, 'dirty')
+}
 
-const updateValidity = <T>(node: Element, classes: ValidityCSSClasses, state: T): T =>
-  toogleClasses(node, classes, state, 'is-invalid', 'is-valid')
+const updateSuccess = (
+  node: Element,
+  classes: ValidityCSSClasses,
+  success: boolean | undefined,
+): boolean | undefined => toogleClass(node, classes, success, 'success')
 
-const updateCustomValidity = (
+const updateError = <T extends undefined | (boolean | Error)>(
+  node: Element,
+  classes: ValidityCSSClasses,
+  error: T,
+): T => toogleClass(node, classes, error, 'error')
+
+const updateValidating = (
+  node: Element,
+  classes: ValidityCSSClasses,
+  validating: boolean | undefined,
+): boolean | undefined => toogleClass(node, classes, validating, 'validating')
+
+const updateValidity = (
   node: Element,
   classes: ValidityCSSClasses,
   error: Error | undefined,
-): Error | undefined => updateValidity(node, classes, setCustomValidity(node, error))
-
-const updateStoreValidity = (
-  node: Element,
-  classes: ValidityCSSClasses,
-  store: ReadonlyMap<string, Error>,
-  path: string,
-): Error | undefined => updateCustomValidity(node, classes, store.get(path))
+): Error | undefined => updateError(node, classes, setCustomValidity(node, error))
 
 const updateStoreDirty = (
   node: Element,
   classes: ValidityCSSClasses,
   store: ReadonlySet<string>,
   path: string,
-): boolean => updateDirty(node, classes, store.has(path))
+): boolean | undefined => updateDirty(node, classes, store.has(path))
+
+const updateStoreValidity = (
+  node: Element,
+  classes: ValidityCSSClasses,
+  store: ReadonlyMap<string, Error>,
+  path: string,
+): Error | undefined => updateValidity(node, classes, store.get(path))
+
+const updateStoreSuccess = (
+  node: Element,
+  classes: ValidityCSSClasses,
+  store: ReadonlySet<string>,
+  path: string,
+): boolean | undefined => updateSuccess(node, classes, store.has(path))
 
 const updateStoreValidating = (
   node: Element,
   classes: ValidityCSSClasses,
   store: ReadonlySet<string>,
   path: string,
-): boolean => updateValidating(node, classes, store.has(path))
+): boolean | undefined => updateValidating(node, classes, store.has(path))
 
-const withFirstError = (
+const useFirstTo = <T>(
+  update: (node: Element, classes: ValidityCSSClasses, state: T | undefined) => T | undefined,
+) => (node: Element, classes: ValidityCSSClasses, results: (T | undefined)[]): T | undefined =>
+  update(node, classes, results.find(identity)) // eslint-disable-line unicorn/no-fn-reference-in-iterator
+
+const useEveryTo = <T>(
+  update: (
+    node: Element,
+    classes: ValidityCSSClasses,
+    state: boolean | undefined,
+  ) => boolean | undefined,
+) => (
   node: Element,
   classes: ValidityCSSClasses,
-  results: (Error | undefined)[],
-): Error | undefined => updateCustomValidity(node, classes, results.find(identity)) // eslint-disable-line unicorn/no-fn-reference-in-iterator
-
-const withSome = (
-  update: (node: Element, classes: ValidityCSSClasses, state: boolean) => boolean,
-) => (node: Element, classes: ValidityCSSClasses, results: (boolean | undefined)[]): boolean =>
-  update(node, classes, results.some(identity)) // eslint-disable-line unicorn/no-fn-reference-in-iterator
+  results: (T | undefined)[],
+): boolean | undefined => update(node, classes, results.every(identity)) // eslint-disable-line unicorn/no-fn-reference-in-iterator
 
 export default function validity<Values, State>(
   context: FormupContext<Values, State>,
@@ -169,46 +189,57 @@ export default function validity<Values, State>(
 
     if (path) {
       // Update classes on this node based on this node validity
-      dispose = [
-        subscribeTo(node, classes, context.errors, updateStoreValidity),
-        subscribeTo(node, classes, context.dirty, updateStoreDirty),
-        subscribeTo(node, classes, context.validating, updateStoreValidating),
-      ]
+      dispose = asArray(path).flatMap((path) => [
+        subscribeTo(path, node, classes, context.dirty, updateStoreDirty),
+        subscribeTo(path, node, classes, context.error, updateStoreValidity),
+        subscribeTo(path, node, classes, context.success, updateStoreSuccess),
+        subscribeTo(path, node, classes, context.validating, updateStoreValidating),
+      ])
     } else if (isHTMLFormElement(node)) {
       // Update classes on the form based on validity of the whole form
       dispose = [
-        subscribe(context.isInvalid, (invalid: boolean) => updateValidity(node, classes, invalid)),
         subscribe(context.isDirty, (dirty: boolean) => updateDirty(node, classes, dirty)),
+        subscribe(context.isError, (error: boolean) => updateError(node, classes, error)),
         subscribe(context.isValidating, (validating: boolean) =>
           updateValidating(node, classes, validating),
         ),
         subscribe(context.isSubmitting, (submitting: boolean) =>
-          toogleClass(node, classes, submitting, 'is-submitting'),
+          toogleClass(node, classes, submitting, 'submitting'),
         ),
         subscribe(context.isSubmitted, (submitted: boolean) =>
-          toogleClass(node, classes, submitted, 'is-submitted'),
-        ),
-
-        // To update the custom validitiy we need the first error message
-        subscribeToElements(
-          node,
-          classes,
-          context.errors,
-          updateStoreCustomValidity,
-          withFirstError,
+          toogleClass(node, classes, submitted, 'submitted'),
         ),
       ]
     } else {
       // Update classes on this node based on the validity of its contained elements
       dispose = [
-        subscribeToElements(node, classes, context.errors, updateStoreValidity, withFirstError),
-        subscribeToElements(node, classes, context.dirty, updateStoreDirty, withSome(updateDirty)),
+        subscribeToElements(
+          node,
+          classes,
+          context.dirty,
+          updateStoreDirty,
+          useFirstTo(updateDirty),
+        ),
+        subscribeToElements(
+          node,
+          classes,
+          context.error,
+          updateStoreValidity,
+          useFirstTo(updateValidity),
+        ),
+        subscribeToElements(
+          node,
+          classes,
+          context.success,
+          updateStoreSuccess,
+          useEveryTo(updateSuccess),
+        ),
         subscribeToElements(
           node,
           classes,
           context.validating,
           updateStoreValidating,
-          withSome(updateValidating),
+          useFirstTo(updateValidating),
         ),
       ]
     }

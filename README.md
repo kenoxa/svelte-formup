@@ -174,15 +174,16 @@ This could be used like (omitting identical code for brevity)
 
 ## Polyfills
 
-- [NodeList#forEach()](https://caniuse.com/#feat=mdn-api_nodelist_foreach): Edge >= 16, Safari >=10
-- [Object.assign()](https://caniuse.com/#feat=mdn-javascript_builtins_object_assign): Edge >= 12
+- [Array#flatMap()](https://caniuse.com/#feat=array-flat): Edge >= 79, Safari >= 12
 - [AbortController](https://caniuse.com/#feat=abortcontroller): Edge >= 16
+- [NodeList#forEach()](https://caniuse.com/#feat=mdn-api_nodelist_foreach): Edge >= 16, Safari >=10
+- [async-await](https://caniuse.com/#feat=async-functions): Edge >= 15
+- [Destructuring assignment](https://caniuse.com/#feat=mdn-javascript_operators_destructuring): Edge >= 14
+- [Object.assign()](https://caniuse.com/#feat=mdn-javascript_builtins_object_assign): Edge >= 12
 - [WeakSet](https://caniuse.com/#feat=mdn-javascript_builtins_weakset): Edge >= 12
 - [Promise](https://caniuse.com/#feat=promises): Edge >= 12
 - [Symbol.for](https://caniuse.com/#search=Symbol.for): Edge >= 12
 - [for...of](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of): Edge >= 12
-- [async-await](https://caniuse.com/#feat=async-functions): Edge >= 15
-- [Destructuring assignment](https://caniuse.com/#feat=mdn-javascript_operators_destructuring): Edge >= 14
 
 ## TODO
 

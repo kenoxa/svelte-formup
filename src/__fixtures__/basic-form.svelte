@@ -32,21 +32,23 @@
 </script>
 
 <form use:validate>
-  <p use:validity>
-    <label for="title">title</label>
-    <select id="title" bind:value={$values.title}>
-      <option>Mr.</option>
-      <option>Mrs.</option>
-      <option>Mx.</option>
-    </select>
-    <IfError at="title" />
-  </p>
+  <fieldset use:validity>
+    <p use:validity>
+      <label for="title">title</label>
+      <select id="title" bind:value={$values.title}>
+        <option>Mr.</option>
+        <option>Mrs.</option>
+        <option>Mx.</option>
+      </select>
+      <IfError at="title" />
+    </p>
 
-  <p use:validity>
-    <label for="name">name</label>
-    <input id="name" bind:value={$values.name} />
-    <IfError at="name" />
-  </p>
+    <p use:validity>
+      <label for="name">name</label>
+      <input id="name" bind:value={$values.name} />
+      <IfError at="name" />
+    </p>
+  </fieldset>
 
   <p use:validity>
     <label for="email">email</label>
