@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>FormupContext | svelte-formup - v0.5.1</title>
+	<title>FormupContext | svelte-formup - v0.6.0</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">svelte-formup - v0.5.1</a>
+					<a href="../index.html" class="title">svelte-formup - v0.6.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -101,22 +101,23 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_svelte_formup_.formupcontext.html#dirtyon" class="tsd-kind-icon">dirty<wbr>On</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_svelte_formup_.formupcontext.html#error" class="tsd-kind-icon">error</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_svelte_formup_.formupcontext.html#errors" class="tsd-kind-icon">errors</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_svelte_formup_.formupcontext.html#formerror" class="tsd-kind-icon">form<wbr>Error</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_svelte_formup_.formupcontext.html#isdirty" class="tsd-kind-icon">is<wbr>Dirty</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_svelte_formup_.formupcontext.html#isinvalid" class="tsd-kind-icon">is<wbr>Invalid</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_svelte_formup_.formupcontext.html#iserror" class="tsd-kind-icon">is<wbr>Error</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_svelte_formup_.formupcontext.html#ispristine" class="tsd-kind-icon">is<wbr>Pristine</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_svelte_formup_.formupcontext.html#issubmitted" class="tsd-kind-icon">is<wbr>Submitted</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_svelte_formup_.formupcontext.html#issubmitting" class="tsd-kind-icon">is<wbr>Submitting</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_svelte_formup_.formupcontext.html#isvalid" class="tsd-kind-icon">is<wbr>Valid</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_svelte_formup_.formupcontext.html#isvalidating" class="tsd-kind-icon">is<wbr>Validating</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_svelte_formup_.formupcontext.html#reset" class="tsd-kind-icon">reset</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_svelte_formup_.formupcontext.html#schema" class="tsd-kind-icon">schema</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_svelte_formup_.formupcontext.html#setdirtyat" class="tsd-kind-icon">set<wbr>Dirty<wbr>At</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_svelte_formup_.formupcontext.html#seterror" class="tsd-kind-icon">set<wbr>Error</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_svelte_formup_.formupcontext.html#seterrorat" class="tsd-kind-icon">set<wbr>Error<wbr>At</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_svelte_formup_.formupcontext.html#setformerror" class="tsd-kind-icon">set<wbr>Form<wbr>Error</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_svelte_formup_.formupcontext.html#setvalidatingat" class="tsd-kind-icon">set<wbr>Validating<wbr>At</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_svelte_formup_.formupcontext.html#state" class="tsd-kind-icon">state</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_svelte_formup_.formupcontext.html#submit" class="tsd-kind-icon">submit</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_svelte_formup_.formupcontext.html#submitcount" class="tsd-kind-icon">submit<wbr>Count</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_svelte_formup_.formupcontext.html#success" class="tsd-kind-icon">success</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_svelte_formup_.formupcontext.html#validate" class="tsd-kind-icon">validate</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_svelte_formup_.formupcontext.html#validateat" class="tsd-kind-icon">validate<wbr>At</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_svelte_formup_.formupcontext.html#validateon" class="tsd-kind-icon">validate<wbr>On</a></li>
@@ -136,7 +137,7 @@
 					<div class="tsd-signature tsd-kind-icon">classes<span class="tsd-signature-symbol">:</span> <a href="_svelte_formup_.validitycssclasses.html" class="tsd-signature-type">ValidityCSSClasses</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L463">src/types/index.ts:463</a></li>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L510">src/types/index.ts:510</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -151,7 +152,7 @@
 					<div class="tsd-signature tsd-kind-icon">debounce<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L458">src/types/index.ts:458</a></li>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L505">src/types/index.ts:505</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -166,7 +167,7 @@
 					<div class="tsd-signature tsd-kind-icon">dirty<span class="tsd-signature-symbol">:</span> <a href="_svelte_formup_.readable.html" class="tsd-signature-type">Readable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReadonlySet</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L259">src/types/index.ts:259</a></li>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L301">src/types/index.ts:301</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -183,7 +184,7 @@
 					<div class="tsd-signature tsd-kind-icon">dirty<wbr>On<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">keyof </span><a href="../globals.html#eventname" class="tsd-signature-type">EventName</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L453">src/types/index.ts:453</a></li>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L500">src/types/index.ts:500</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -195,16 +196,17 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="error" class="tsd-anchor"></a>
 					<h3>error</h3>
-					<div class="tsd-signature tsd-kind-icon">error<span class="tsd-signature-symbol">:</span> <a href="_svelte_formup_.readable.html" class="tsd-signature-type">Readable</a><span class="tsd-signature-symbol">&lt;</span><a href="_svelte_formup_.validationerror.html" class="tsd-signature-type">ValidationError</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">error<span class="tsd-signature-symbol">:</span> <a href="_svelte_formup_.readable.html" class="tsd-signature-type">Readable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReadonlyMap</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="_svelte_formup_.validationerror.html" class="tsd-signature-type">ValidationError</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L237">src/types/index.ts:237</a></li>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L326">src/types/index.ts:326</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Whole form error, not associated with any field</p>
+							<p>The invalid, meaning dirty and not validating and error, fields by path as a svelte store.</p>
 						</div>
+						<pre><code class="language-html">{#if $invalid.has(email)} $invalid.get(email).message {/if}</code></pre>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
@@ -213,7 +215,7 @@
 					<div class="tsd-signature tsd-kind-icon">errors<span class="tsd-signature-symbol">:</span> <a href="_svelte_formup_.readable.html" class="tsd-signature-type">Readable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReadonlyMap</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="_svelte_formup_.validationerror.html" class="tsd-signature-type">ValidationError</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L248">src/types/index.ts:248</a></li>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L290">src/types/index.ts:290</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -225,12 +227,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="formerror" class="tsd-anchor"></a>
+					<h3>form<wbr>Error</h3>
+					<div class="tsd-signature tsd-kind-icon">form<wbr>Error<span class="tsd-signature-symbol">:</span> <a href="_svelte_formup_.readable.html" class="tsd-signature-type">Readable</a><span class="tsd-signature-symbol">&lt;</span><a href="_svelte_formup_.validationerror.html" class="tsd-signature-type">ValidationError</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L279">src/types/index.ts:279</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whole form error, not associated with any field</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="isdirty" class="tsd-anchor"></a>
 					<h3>is<wbr>Dirty</h3>
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Dirty<span class="tsd-signature-symbol">:</span> <a href="_svelte_formup_.readable.html" class="tsd-signature-type">Readable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L334">src/types/index.ts:334</a></li>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L374">src/types/index.ts:374</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -241,20 +258,19 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="isinvalid" class="tsd-anchor"></a>
-					<h3>is<wbr>Invalid</h3>
-					<div class="tsd-signature tsd-kind-icon">is<wbr>Invalid<span class="tsd-signature-symbol">:</span> <a href="_svelte_formup_.readable.html" class="tsd-signature-type">Readable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<a name="iserror" class="tsd-anchor"></a>
+					<h3>is<wbr>Error</h3>
+					<div class="tsd-signature tsd-kind-icon">is<wbr>Error<span class="tsd-signature-symbol">:</span> <a href="_svelte_formup_.readable.html" class="tsd-signature-type">Readable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L318">src/types/index.ts:318</a></li>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L381">src/types/index.ts:381</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Boolean that is true when form is invalid.</p>
+							<p>Determines if the whole form is valid.</p>
 						</div>
-						<p>A form is invalid when any of its inputs fails its validation function ( if there are errors ).</p>
-						<p>When this becames <code>true</code> the {@link ValidityCSSClasses.invalid} CSS class is added to the form.</p>
+						<p>When this becames <code>true</code> the {@link ValidityCSSClasses.valid} CSS class is added to the form.</p>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
@@ -263,7 +279,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Pristine<span class="tsd-signature-symbol">:</span> <a href="_svelte_formup_.readable.html" class="tsd-signature-type">Readable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L327">src/types/index.ts:327</a></li>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L367">src/types/index.ts:367</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -280,7 +296,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Submitted<span class="tsd-signature-symbol">:</span> <a href="_svelte_formup_.readable.html" class="tsd-signature-type">Readable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L295">src/types/index.ts:295</a></li>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L351">src/types/index.ts:351</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -296,7 +312,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Submitting<span class="tsd-signature-symbol">:</span> <a href="_svelte_formup_.readable.html" class="tsd-signature-type">Readable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L288">src/types/index.ts:288</a></li>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L344">src/types/index.ts:344</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -307,28 +323,12 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="isvalid" class="tsd-anchor"></a>
-					<h3>is<wbr>Valid</h3>
-					<div class="tsd-signature tsd-kind-icon">is<wbr>Valid<span class="tsd-signature-symbol">:</span> <a href="_svelte_formup_.readable.html" class="tsd-signature-type">Readable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L309">src/types/index.ts:309</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Determines if the whole form is valid.</p>
-						</div>
-						<p>When this becames <code>true</code> the {@link ValidityCSSClasses.valid} CSS class is added to the form.</p>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="isvalidating" class="tsd-anchor"></a>
 					<h3>is<wbr>Validating</h3>
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Validating<span class="tsd-signature-symbol">:</span> <a href="_svelte_formup_.readable.html" class="tsd-signature-type">Readable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L281">src/types/index.ts:281</a></li>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L337">src/types/index.ts:337</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -345,7 +345,7 @@
 					<div class="tsd-signature tsd-kind-icon">reset<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Event</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L359">src/types/index.ts:359</a></li>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L406">src/types/index.ts:406</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -383,7 +383,7 @@
 					<div class="tsd-signature tsd-kind-icon">schema<span class="tsd-signature-symbol">:</span> <a href="_svelte_formup_.formupschema.html" class="tsd-signature-type">FormupSchema</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Values</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">State</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L216">src/types/index.ts:216</a></li>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L258">src/types/index.ts:258</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -398,7 +398,7 @@
 					<div class="tsd-signature tsd-kind-icon">set<wbr>Dirty<wbr>At<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, dirty<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L383">src/types/index.ts:383</a></li>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L430">src/types/index.ts:430</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -440,54 +440,12 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="seterror" class="tsd-anchor"></a>
-					<h3>set<wbr>Error</h3>
-					<div class="tsd-signature tsd-kind-icon">set<wbr>Error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">?: </span><a href="_svelte_formup_.validationerror.html" class="tsd-signature-type">ValidationError</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L367">src/types/index.ts:367</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Set the form error manually.</p>
-						</div>
-						<p>If <code>error</code> is falsey means deleting the path from the store.</p>
-						<dl class="tsd-comment-tags">
-							<dt>param</dt>
-							<dd><p>to set</p>
-							</dd>
-						</dl>
-					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-signature">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">?: </span><a href="_svelte_formup_.validationerror.html" class="tsd-signature-type">ValidationError</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5><span class="tsd-flag ts-flagOptional">Optional</span> error: <a href="_svelte_formup_.validationerror.html" class="tsd-signature-type">ValidationError</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="seterrorat" class="tsd-anchor"></a>
 					<h3>set<wbr>Error<wbr>At</h3>
 					<div class="tsd-signature tsd-kind-icon">set<wbr>Error<wbr>At<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, error<span class="tsd-signature-symbol">?: </span><a href="_svelte_formup_.validationerror.html" class="tsd-signature-type">ValidationError</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L375">src/types/index.ts:375</a></li>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L422">src/types/index.ts:422</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -529,12 +487,54 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="setformerror" class="tsd-anchor"></a>
+					<h3>set<wbr>Form<wbr>Error</h3>
+					<div class="tsd-signature tsd-kind-icon">set<wbr>Form<wbr>Error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">?: </span><a href="_svelte_formup_.validationerror.html" class="tsd-signature-type">ValidationError</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L414">src/types/index.ts:414</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Set the form error manually.</p>
+						</div>
+						<p>If <code>error</code> is falsey means deleting the path from the store.</p>
+						<dl class="tsd-comment-tags">
+							<dt>param</dt>
+							<dd><p>to set</p>
+							</dd>
+						</dl>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">?: </span><a href="_svelte_formup_.validationerror.html" class="tsd-signature-type">ValidationError</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> error: <a href="_svelte_formup_.validationerror.html" class="tsd-signature-type">ValidationError</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="setvalidatingat" class="tsd-anchor"></a>
 					<h3>set<wbr>Validating<wbr>At</h3>
 					<div class="tsd-signature tsd-kind-icon">set<wbr>Validating<wbr>At<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, validating<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L391">src/types/index.ts:391</a></li>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L438">src/types/index.ts:438</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -581,7 +581,7 @@
 					<div class="tsd-signature tsd-kind-icon">state<span class="tsd-signature-symbol">:</span> <a href="_svelte_formup_.writable.html" class="tsd-signature-type">Writable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">State</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L232">src/types/index.ts:232</a></li>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L274">src/types/index.ts:274</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -597,7 +597,7 @@
 					<div class="tsd-signature tsd-kind-icon">submit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Event</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L350">src/types/index.ts:350</a></li>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L397">src/types/index.ts:397</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -647,7 +647,7 @@
 					<div class="tsd-signature tsd-kind-icon">submit<wbr>Count<span class="tsd-signature-symbol">:</span> <a href="_svelte_formup_.readable.html" class="tsd-signature-type">Readable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L302">src/types/index.ts:302</a></li>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L358">src/types/index.ts:358</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -658,12 +658,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="success" class="tsd-anchor"></a>
+					<h3>success</h3>
+					<div class="tsd-signature tsd-kind-icon">success<span class="tsd-signature-symbol">:</span> <a href="_svelte_formup_.readable.html" class="tsd-signature-type">Readable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReadonlySet</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L317">src/types/index.ts:317</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The valid, meaning dirty and not validating and no error, fields by path as a svelte store.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="validate" class="tsd-anchor"></a>
 					<h3>validate</h3>
 					<div class="tsd-signature tsd-kind-icon">validate<span class="tsd-signature-symbol">:</span> <a href="../globals.html#svelteaction" class="tsd-signature-type">SvelteAction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="_svelte_formup_.validateactionoptions.html" class="tsd-signature-type">ValidateActionOptions</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L420">src/types/index.ts:420</a></li>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L467">src/types/index.ts:467</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -696,7 +711,7 @@
 					<div class="tsd-signature tsd-kind-icon">validate<wbr>At<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, options<span class="tsd-signature-symbol">?: </span><a href="_svelte_formup_.validateatoptions.html" class="tsd-signature-type">ValidateAtOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L396">src/types/index.ts:396</a></li>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L443">src/types/index.ts:443</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -735,7 +750,7 @@
 					<div class="tsd-signature tsd-kind-icon">validate<wbr>On<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">keyof </span><a href="../globals.html#eventname" class="tsd-signature-type">EventName</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L448">src/types/index.ts:448</a></li>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L495">src/types/index.ts:495</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -750,7 +765,7 @@
 					<div class="tsd-signature tsd-kind-icon">validating<span class="tsd-signature-symbol">:</span> <a href="_svelte_formup_.readable.html" class="tsd-signature-type">Readable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReadonlySet</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L270">src/types/index.ts:270</a></li>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L312">src/types/index.ts:312</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -767,7 +782,7 @@
 					<div class="tsd-signature tsd-kind-icon">validity<span class="tsd-signature-symbol">:</span> <a href="../globals.html#svelteaction" class="tsd-signature-type">SvelteAction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="_svelte_formup_.validitiyactionoptions.html" class="tsd-signature-type">ValiditiyActionOptions</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L442">src/types/index.ts:442</a></li>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L489">src/types/index.ts:489</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -795,7 +810,7 @@
 					<div class="tsd-signature tsd-kind-icon">values<span class="tsd-signature-symbol">:</span> <a href="_svelte_formup_.writable.html" class="tsd-signature-type">Writable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NonNullable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Values</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/f2d1b88/src/types/index.ts#L225">src/types/index.ts:225</a></li>
+							<li>Defined in <a href="https://github.com/kenoxa/svelte-formup/blob/0480309/src/types/index.ts#L267">src/types/index.ts:267</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -841,10 +856,13 @@
 								<a href="_svelte_formup_.formupcontext.html#errors" class="tsd-kind-icon">errors</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_svelte_formup_.formupcontext.html#formerror" class="tsd-kind-icon">form<wbr>Error</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="_svelte_formup_.formupcontext.html#isdirty" class="tsd-kind-icon">is<wbr>Dirty</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_svelte_formup_.formupcontext.html#isinvalid" class="tsd-kind-icon">is<wbr>Invalid</a>
+								<a href="_svelte_formup_.formupcontext.html#iserror" class="tsd-kind-icon">is<wbr>Error</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="_svelte_formup_.formupcontext.html#ispristine" class="tsd-kind-icon">is<wbr>Pristine</a>
@@ -854,9 +872,6 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="_svelte_formup_.formupcontext.html#issubmitting" class="tsd-kind-icon">is<wbr>Submitting</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_svelte_formup_.formupcontext.html#isvalid" class="tsd-kind-icon">is<wbr>Valid</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="_svelte_formup_.formupcontext.html#isvalidating" class="tsd-kind-icon">is<wbr>Validating</a>
@@ -871,10 +886,10 @@
 								<a href="_svelte_formup_.formupcontext.html#setdirtyat" class="tsd-kind-icon">set<wbr>Dirty<wbr>At</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_svelte_formup_.formupcontext.html#seterror" class="tsd-kind-icon">set<wbr>Error</a>
+								<a href="_svelte_formup_.formupcontext.html#seterrorat" class="tsd-kind-icon">set<wbr>Error<wbr>At</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_svelte_formup_.formupcontext.html#seterrorat" class="tsd-kind-icon">set<wbr>Error<wbr>At</a>
+								<a href="_svelte_formup_.formupcontext.html#setformerror" class="tsd-kind-icon">set<wbr>Form<wbr>Error</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="_svelte_formup_.formupcontext.html#setvalidatingat" class="tsd-kind-icon">set<wbr>Validating<wbr>At</a>
@@ -887,6 +902,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="_svelte_formup_.formupcontext.html#submitcount" class="tsd-kind-icon">submit<wbr>Count</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_svelte_formup_.formupcontext.html#success" class="tsd-kind-icon">success</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="_svelte_formup_.formupcontext.html#validate" class="tsd-kind-icon">validate</a>
