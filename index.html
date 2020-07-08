@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>svelte-formup - v0.6.0</title>
+	<title>svelte-formup - v0.6.1</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">svelte-formup - v0.6.0</a>
+					<a href="index.html" class="title">svelte-formup - v0.6.1</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -49,7 +49,7 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 			</ul>
-			<h1>svelte-formup - v0.6.0</h1>
+			<h1>svelte-formup - v0.6.1</h1>
 		</div>
 	</div>
 </header>
@@ -89,7 +89,7 @@
 				</a>
 				<p><a href="https://svelte.dev/">svelte</a>s <a href="https://svelte.dev/docs#use_action">action feature</a> is a unique way to attach custom logic to DOM elements. Combined with its great way of <a href="https://svelte.dev/docs#bind_element_property">two-way binding</a> and its <a href="https://svelte.dev/docs#svelte_store">reactive stores</a> this allows to write very native looking forms with no boilerplate.</p>
 				<p>Adding <a href="https://www.npmjs.com/package/yup">yup</a> allows to define a schema for value parsing and validation. Yup schema are extremely expressive and allow modeling complex, interdependent validations, or value transformations.</p>
-				<p>Styling forms in a consistent way has always been a problem. Everyone has her own opinion about it. <code>svelte-formup</code> allows flexibel error reporting supporting both <a href="https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation">native</a> and programmatic usage. Invalid form elements <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement/setCustomValidity">are marked</a> supporting several validity state specific css selectors like <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:invalid">:invalid</a>. Additionally <code>svelte-formup</code> adds CSS classes (<code>is-invalid</code>, <code>is-valid</code>, <code>is-dirty</code>, <code>is-pristine</code>, <code>is-validating</code>, <code>is-submitting</code> and <code>is-submitted</code>) for further custom styling. These classes maybe added to surrounding fieldsets or form group element depending on the validity state of the contained form elements.</p>
+				<p>Styling forms in a consistent way has always been a problem. Everyone has her own opinion about it. <code>svelte-formup</code> allows flexibel error reporting supporting both <a href="https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation">native</a> and programmatic usage. Invalid form elements <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement/setCustomValidity">are marked</a> supporting several validity state specific css selectors like <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:invalid">:invalid</a>. Additionally <code>svelte-formup</code> adds CSS classes (<code>is-error</code>, <code>is-success</code>, <code>is-dirty</code>, <code>is-pristine</code>, <code>is-validating</code>, <code>is-submitting</code> and <code>is-submitted</code>) for further custom styling. These classes maybe added to surrounding fieldsets or form group element depending on the validity state of the contained form elements. On non form elements these classes are set using the <code>has-</code> prefix instead of <code>is-</code>.</p>
 				<!-- prettier-ignore-start -->
 				<!-- START doctoc generated TOC please keep comment here to allow auto update -->
 				<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -180,14 +180,14 @@
 
   <span class="hljs-keyword">export</span> <span class="hljs-keyword">let</span> at
 
-  <span class="hljs-keyword">const</span> { dirty, errors } = getFormupContext()
+  <span class="hljs-keyword">const</span> { invalid } = getFormupContext()
 
   <span class="hljs-keyword">let</span> error
 
-  <span class="hljs-attr">$</span>: error = $errors.get(at)
+  <span class="hljs-attr">$</span>: error = $invalid.get(at)
 </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 
-{#if $dirty.has(at) &amp;&amp; error}
+{#if error}
 <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"error"</span> <span class="hljs-attr">aria-live</span>=<span class="hljs-string">"polite"</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">slot</span> {<span class="hljs-attr">error</span>}&gt;</span>{error.message}<span class="hljs-tag">&lt;/<span class="hljs-name">slot</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
