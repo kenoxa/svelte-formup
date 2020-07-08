@@ -2,6 +2,13 @@
 
 # Changelog
 
+## [0.6.0](https://www.github.com/kenoxa/svelte-formup/compare/v0.5.1...v0.6.0) (2020-07-08)
+
+
+### Features
+
+* `at` can be an array and reworked css classes ([f68d54e](https://www.github.com/kenoxa/svelte-formup/commit/f68d54ef0a0a8f7485949140c3d7af43eabc7bd3))
+
 ### [0.5.1](https://www.github.com/kenoxa/svelte-formup/compare/v0.5.0...v0.5.1) (2020-07-07)
 
 
