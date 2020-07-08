@@ -2,6 +2,13 @@
 
 # Changelog
 
+### [0.6.1](https://www.github.com/kenoxa/svelte-formup/compare/v0.6.0...v0.6.1) (2020-07-08)
+
+
+### Bug Fixes
+
+* use valid and invalid in context ([8985811](https://www.github.com/kenoxa/svelte-formup/commit/89858116a24bf3e760ccd68c059487cc35994641))
+
 ## [0.6.0](https://www.github.com/kenoxa/svelte-formup/compare/v0.5.1...v0.6.0) (2020-07-08)
 
 
