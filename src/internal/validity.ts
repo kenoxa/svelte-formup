@@ -191,8 +191,8 @@ export default function validity<Values, State>(
       // Update classes on this node based on this node validity
       dispose = asArray(path).flatMap((path) => [
         subscribeTo(path, node, classes, context.dirty, updateStoreDirty),
-        subscribeTo(path, node, classes, context.error, updateStoreValidity),
-        subscribeTo(path, node, classes, context.success, updateStoreSuccess),
+        subscribeTo(path, node, classes, context.invalid, updateStoreValidity),
+        subscribeTo(path, node, classes, context.valid, updateStoreSuccess),
         subscribeTo(path, node, classes, context.validating, updateStoreValidating),
       ])
     } else if (isHTMLFormElement(node)) {
@@ -223,14 +223,14 @@ export default function validity<Values, State>(
         subscribeToElements(
           node,
           classes,
-          context.error,
+          context.invalid,
           updateStoreValidity,
           useFirstTo(updateValidity),
         ),
         subscribeToElements(
           node,
           classes,
-          context.success,
+          context.valid,
           updateStoreSuccess,
           useEveryTo(updateSuccess),
         ),

@@ -314,7 +314,7 @@ export interface FormupContext<Values = Record<string, unknown>, State = Record<
   /**
    * The valid, meaning dirty and not validating and no error, fields by path as a svelte store.
    */
-  readonly success: Readable<ReadonlySet<string>>
+  readonly valid: Readable<ReadonlySet<string>>
 
   /**
    * The invalid, meaning dirty and not validating and error, fields by path as a svelte store.
@@ -323,7 +323,7 @@ export interface FormupContext<Values = Record<string, unknown>, State = Record<
    * {#if $invalid.has(email)} $invalid.get(email).message {/if}
    * ```
    */
-  readonly error: Readable<ReadonlyMap<string, ValidationError>>
+  readonly invalid: Readable<ReadonlyMap<string, ValidationError>>
 
   // These are whole form related stores
 

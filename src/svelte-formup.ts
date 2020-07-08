@@ -169,28 +169,28 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
   const dirty = writable(new Set<string>())
   const validating = writable(new Set<string>())
 
-  const success = derived([dirty, validating, errors], ([$dirty, $validating, $errors]) => {
-    const $success = new Set<string>()
+  const valid = derived([dirty, validating, errors], ([$dirty, $validating, $errors]) => {
+    const $valid = new Set<string>()
 
     for (const field of $dirty) {
       if (!$errors.has(field) && !$validating.has(field)) {
-        $success.add(field)
+        $valid.add(field)
       }
     }
 
-    return $success
+    return $valid
   })
 
-  const error = derived([dirty, validating, errors], ([$dirty, $validating, $errors]) => {
-    const $error = new Map<string, ValidationError>()
+  const invalid = derived([dirty, validating, errors], ([$dirty, $validating, $errors]) => {
+    const $invalid = new Map<string, ValidationError>()
 
     for (const [field, error] of $errors.entries()) {
       if ($dirty.has(field) && !$validating.has(field)) {
-        $error.set(field, error)
+        $invalid.set(field, error)
       }
     }
 
-    return $error
+    return $invalid
   })
 
   const isSubmitting = writable(false)
@@ -239,8 +239,8 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
     errors,
     dirty,
     validating,
-    error,
-    success,
+    invalid,
+    valid,
 
     // These are whole form related stores
 

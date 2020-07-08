@@ -28,23 +28,29 @@
 
 Adding [yup] allows to define a schema for value parsing and validation. Yup schema are extremely expressive and allow modeling complex, interdependent validations, or value transformations.
 
-Styling forms in a consistent way has always been a problem. Everyone has her own opinion about it. `svelte-formup` allows flexibel error reporting supporting both [native](https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation) and programmatic usage. Invalid form elements [are marked](https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement/setCustomValidity) supporting several validity state specific css selectors like [:invalid](https://developer.mozilla.org/en-US/docs/Web/CSS/:invalid). Additionally `svelte-formup` adds CSS classes (`is-invalid`, `is-valid`, `is-dirty`, `is-pristine`, `is-validating`, `is-submitting` and `is-submitted`) for further custom styling. These classes maybe added to surrounding fieldsets or form group element depending on the validity state of the contained form elements.
+Styling forms in a consistent way has always been a problem. Everyone has her own opinion about it. `svelte-formup` allows flexibel error reporting supporting both [native](https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation) and programmatic usage. Invalid form elements [are marked](https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement/setCustomValidity) supporting several validity state specific css selectors like [:invalid](https://developer.mozilla.org/en-US/docs/Web/CSS/:invalid). Additionally `svelte-formup` adds CSS classes (`is-error`, `is-success`, `is-dirty`, `is-pristine`, `is-validating`, `is-submitting` and `is-submitted`) for further custom styling. These classes maybe added to surrounding fieldsets or form group element depending on the validity state of the contained form elements. On non form elements these classes are set using the `has-` prefix instead of `is-`.
 
 <!-- prettier-ignore-start -->
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [API](#api)
-- [Polyfills](#polyfills)
-- [TODO](#todo)
-- [Related Projects](#related-projects)
-- [Support](#support)
-- [Contribute](#contribute)
-- [NPM Statistics](#npm-statistics)
-- [License](#license)
+- [svelte-formup](#svelte-formup)
+  - [What?](#what)
+  - [Why?](#why)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Native HTML form elements](#native-html-form-elements)
+    - [Error Messages](#error-messages)
+  - [API](#api)
+  - [Polyfills](#polyfills)
+  - [TODO](#todo)
+  - [Related Projects](#related-projects)
+  - [Support](#support)
+  - [Contribute](#contribute)
+    - [Develop](#develop)
+  - [NPM Statistics](#npm-statistics)
+  - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <!-- prettier-ignore-end -->
@@ -137,14 +143,14 @@ import { formup } from 'https://unpkg.com/svelte-formup?module'
 
   export let at
 
-  const { dirty, errors } = getFormupContext()
+  const { invalid } = getFormupContext()
 
   let error
 
-  $: error = $errors.get(at)
+  $: error = $invalid.get(at)
 </script>
 
-{#if $dirty.has(at) && error}
+{#if error}
 <span class="error" aria-live="polite">
   <slot {error}>{error.message}</slot>
 </span>
