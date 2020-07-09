@@ -133,6 +133,11 @@ export interface FormupOptions<Values = Record<string, unknown>, State = Record<
    * Allow to override the used CSS classes.
    */
   classes?: ValidityCSSClasses
+
+  /**
+   * Set the `autocomplete` attribute on the form.
+   */
+  autocomplete?: string
 }
 
 const isEmpty = ({ size }: { size: number }): boolean => size === 0
@@ -162,6 +167,7 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
   dirtyOn = validateOn,
   debounce = isNode ? 0 : 100,
   classes = {},
+  autocomplete = 'off',
 }: FormupOptions<Values, State>): FormupContext<Values, State> => {
   const values = writable(getInitialValues())
 
@@ -325,6 +331,7 @@ export const formup = <Values = Record<string, unknown>, State = Record<string, 
     dirtyOn: asArray(dirtyOn),
     debounce,
     classes,
+    autocomplete,
   }
 
   setContext(CONTEXT_KEY, context)

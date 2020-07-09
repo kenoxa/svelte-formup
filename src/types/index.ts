@@ -508,6 +508,11 @@ export interface FormupContext<Values = Record<string, unknown>, State = Record<
    * The used CSS class overrides.
    */
   readonly classes: ValidityCSSClasses
+
+  /**
+   * Sets the `autocomplete` on the form.
+   */
+  readonly autocomplete: string
 }
 
 /**

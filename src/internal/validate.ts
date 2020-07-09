@@ -81,6 +81,7 @@ export default function validate<Values, State>(
         // Setting the novalidate attribute on the form is what stops the form from showing its own error message bubbles,
         // and allows us to instead display the custom error messages in the DOM in some manner of our own choosing.
         node.noValidate = true
+        node.autocomplete = context.autocomplete
 
         // Ensure the aria role is set
         if (!node.role) node.role = 'form'
