@@ -46,14 +46,14 @@ export interface Writable<T> extends Readable<T> {
 }
 
 export interface SvelteActionResult<P> {
-  update?: (parameters?: P) => void
+  update?: (parameters: P) => void
   destroy?: () => void
 }
 
 /**
  * A [svelte action](https://svelte.dev/docs#use_action) to be applied on a element
  */
-export type SvelteAction<P> = (node: Element, parameters?: P) => SvelteActionResult<P>
+export type SvelteAction<P> = (node: Element, parameters: P) => SvelteActionResult<P>
 
 /**
  * A DOM event. Common events are:
@@ -464,7 +464,7 @@ export interface FormupContext<Values = Record<string, unknown>, State = Record<
    * @remarks
    * The {@link FormupContext.validity} action is applied automatically on that node.
    */
-  readonly validate: SvelteAction<string | ValidateActionOptions>
+  readonly validate: SvelteAction<undefined | string | ValidateActionOptions>
 
   /**
    * A [svelte action](https://svelte.dev/docs#use_action) to update the validity state of
@@ -486,7 +486,7 @@ export interface FormupContext<Values = Record<string, unknown>, State = Record<
    * </form>
    * ```
    */
-  readonly validity: SvelteAction<string | ValiditiyActionOptions>
+  readonly validity: SvelteAction<undefined | string | ValiditiyActionOptions>
 
   // Passed in options
   /**

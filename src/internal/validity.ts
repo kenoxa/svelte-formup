@@ -173,7 +173,7 @@ export default function validity<Values, State>(
   context: FormupContext<Values, State>,
   node: Element,
   options?: string | ValiditiyActionOptions,
-): SvelteActionResult<string | ValiditiyActionOptions> {
+): SvelteActionResult<undefined | string | ValiditiyActionOptions> {
   let dispose: undefined | Unsubscriber[]
 
   const destroy = (): void => runAll(dispose)

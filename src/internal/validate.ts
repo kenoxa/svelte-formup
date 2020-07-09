@@ -42,7 +42,7 @@ export default function validate<Values, State>(
   context: FormupContext<Values, State>,
   node: Element,
   options?: string | ValidateActionOptions,
-): SvelteActionResult<string | ValidateActionOptions> {
+): SvelteActionResult<undefined | string | ValidateActionOptions> {
   let dispose: undefined | (Unsubscriber | undefined)[]
 
   const destroy = (): void => runAll(dispose)
