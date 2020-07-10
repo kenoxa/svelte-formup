@@ -46,14 +46,14 @@ export interface Writable<T> extends Readable<T> {
 }
 
 export interface SvelteActionResult<P> {
-  update?: (parameters: P) => void
+  update?: (parameters?: P) => void
   destroy?: () => void
 }
 
 /**
  * A [svelte action](https://svelte.dev/docs#use_action) to be applied on a element
  */
-export type SvelteAction<P> = (node: Element, parameters: P) => SvelteActionResult<P>
+export type SvelteAction<P> = (node: Element, parameters?: P) => SvelteActionResult<P>
 
 /**
  * A DOM event. Common events are:
@@ -540,9 +540,9 @@ export interface ValidateActionOptions {
    *
    * If `at` is not provided and the element is not a form it defaults to:
    *
-   * - the [data attribute](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes) `at`
+   * - the [data attribute](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes) `pathAt`
    * - the `name` attribute
-   * - the `for` attribute
+   * - the path of the element referenced by the `for` attribute
    * - the `id` attribute
    *
    * If the only option is `at` it can be used directly:
@@ -601,9 +601,9 @@ export interface ValiditiyActionOptions {
    *
    * If `at` is not provided and the element is not a form it defaults to:
    *
-   * - the [data attribute](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes) `at`
+   * - the [data attribute](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes) `pathAt`
    * - the `name` attribute
-   * - the `for` attribute
+   * - the path of the element referenced by the `for` attribute
    * - the `id` attribute
    *
    * If the only option is `at` it can be used directly:

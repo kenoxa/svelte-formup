@@ -2,6 +2,7 @@ import { render, screen, waitFor } from '@testing-library/svelte'
 import userEvent from '@testing-library/user-event'
 
 import BasicForm from '../__fixtures__/basic-form.svelte'
+import { findSchemaPathForElement } from '../internal/utils'
 
 test('render', () => {
   render(BasicForm)
@@ -26,4 +27,28 @@ test('async validation', async () => {
   await waitFor(() => expect(email).toHaveClass('is-error', 'is-dirty'))
 
   expect(email).not.toHaveClass('is-success', 'is-pristine', 'is-validating')
+})
+
+test('find path by id', () => {
+  render(BasicForm)
+
+  const titleLabel = screen.getByText('title')
+
+  expect(findSchemaPathForElement(titleLabel)).toBe('title')
+})
+
+test('find path by dataset', () => {
+  render(BasicForm)
+
+  const nameLabel = screen.getByText('name')
+
+  expect(findSchemaPathForElement(nameLabel)).toBe('name')
+})
+
+test('find path by name', () => {
+  render(BasicForm)
+
+  const emailLabel = screen.getByText('email')
+
+  expect(findSchemaPathForElement(emailLabel)).toBe('email')
 })

@@ -44,15 +44,19 @@
     </p>
 
     <p use:validity>
-      <label for="name">name</label>
-      <input id="name" bind:value={$values.name} />
+      <label for="~name-id">name</label>
+      <input id="~name-id" data-path-at="name" bind:value={$values.name} />
       <IfError at="name" />
     </p>
   </fieldset>
 
   <p use:validity>
-    <label for="email">email</label>
-    <input id="email" bind:value={$values.email} use:validate={{ on: 'input' }} />
+    <label for="~special-email-id">email</label>
+    <input
+      id="~special-email-id"
+      name="email"
+      bind:value={$values.email}
+      use:validate={{ on: 'input' }} />
     <IfError at="email" />
   </p>
 

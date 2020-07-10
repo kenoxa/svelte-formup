@@ -35,22 +35,16 @@ Styling forms in a consistent way has always been a problem. Everyone has her ow
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [svelte-formup](#svelte-formup)
-  - [What?](#what)
-  - [Why?](#why)
-  - [Installation](#installation)
-  - [Usage](#usage)
-    - [Native HTML form elements](#native-html-form-elements)
-    - [Error Messages](#error-messages)
-  - [API](#api)
-  - [Polyfills](#polyfills)
-  - [TODO](#todo)
-  - [Related Projects](#related-projects)
-  - [Support](#support)
-  - [Contribute](#contribute)
-    - [Develop](#develop)
-  - [NPM Statistics](#npm-statistics)
-  - [License](#license)
+- [Installation](#installation)
+- [Usage](#usage)
+- [API](#api)
+- [Polyfills](#polyfills)
+- [TODO](#todo)
+- [Related Projects](#related-projects)
+- [Support](#support)
+- [Contribute](#contribute)
+- [NPM Statistics](#npm-statistics)
+- [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <!-- prettier-ignore-end -->
