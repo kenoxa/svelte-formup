@@ -2,6 +2,15 @@
 
 # Changelog
 
+### [0.6.2](https://www.github.com/kenoxa/svelte-formup/compare/v0.6.1...v0.6.2) (2020-07-10)
+
+
+### Bug Fixes
+
+* element path resolution ([0d7bd7f](https://www.github.com/kenoxa/svelte-formup/commit/0d7bd7f64e7a757c63c1e5adb18a9af6fb5fd82a))
+* set form autocomplete attribute ([594d02f](https://www.github.com/kenoxa/svelte-formup/commit/594d02f55bb4a95e393424f5d36d41b0f2bdcdcd))
+* svelte action typeings ([76455b5](https://www.github.com/kenoxa/svelte-formup/commit/76455b526f1e6961a0abec6c164810a1dd9d00f4))
+
 ### [0.6.1](https://www.github.com/kenoxa/svelte-formup/compare/v0.6.0...v0.6.1) (2020-07-08)
 
 
