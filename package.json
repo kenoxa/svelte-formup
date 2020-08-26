@@ -1,6 +1,6 @@
 {
   "name": "svelte-formup",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "form helpers for svelte",
   "keywords": [
     "svelte",
