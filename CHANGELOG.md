@@ -2,6 +2,13 @@
 
 # Changelog
 
+### [0.6.3](https://www.github.com/kenoxa/svelte-formup/compare/v0.6.2...v0.6.3) (2020-08-26)
+
+
+### Reverts
+
+* Revert "chore(deps-dev): bump typedoc from 0.17.0-3 to 0.18.0 (#36)" (#44) ([72d0c13](https://www.github.com/kenoxa/svelte-formup/commit/72d0c137a127e857c23344f813c9fc5359d1e66c)), closes [#36](https://www.github.com/kenoxa/svelte-formup/issues/36) [#44](https://www.github.com/kenoxa/svelte-formup/issues/44)
+
 ### [0.6.2](https://www.github.com/kenoxa/svelte-formup/compare/v0.6.1...v0.6.2) (2020-07-10)
 
 
