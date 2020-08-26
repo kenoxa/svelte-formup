@@ -50,7 +50,7 @@
     "nps": "^5.9.12",
     "svelte": "^3.22.3",
     "svelte-htm": "^1.1.1",
-    "typedoc": "0.18.0",
+    "typedoc": "0.17.0-3",
     "yup": "^0.29.1"
   },
   "peerDependencies": {
